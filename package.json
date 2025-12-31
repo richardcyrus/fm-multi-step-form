@@ -12,6 +12,7 @@
     "check": "prettier --write \"**/*.(c|m)[jt]s?(x)\" && eslint --fix \"**/*.[jt]s?(x)\"",
     "prepare": "husky"
   },
+  "license": "MIT",
   "dependencies": {
     "@tanstack/react-devtools": "^0.9.0",
     "@tanstack/react-router": "^1.144.0",
