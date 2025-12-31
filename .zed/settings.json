@@ -1,0 +1,66 @@
+{
+  "git": {
+    "git_gutter": "tracked_files",
+    "gutter_debounce": 300,
+  },
+  "lsp": {
+    "eslint": {
+      "settings": {
+        "codeActionOnSave": {
+          "rules": ["import/order", "import/first", "import/no-duplicates"],
+        },
+      },
+    },
+  },
+  "languages": {
+    "JavaScript": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true,
+      },
+      "formatter": {
+        "external": {
+          "command": "prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"],
+        },
+      },
+    },
+    "TypeScript": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true,
+      },
+      "formatter": {
+        "external": {
+          "command": "prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"],
+        },
+      },
+    },
+    "TSX": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true,
+      },
+      "formatter": {
+        "external": {
+          "command": "prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"],
+        },
+      },
+    },
+    "Markdown": {
+      "format_on_save": "on",
+      "preferred_line_length": 80,
+      "soft_wrap": "preferred_line_length",
+      "prettier": {
+        "allowed": true,
+      },
+    },
+    "CSS": {
+      "code_actions_on_format": {
+        "source.fixAll.stylelint": true,
+      },
+      "prettier": {
+        "allowed": true,
+      },
+    },
+  },
+}
