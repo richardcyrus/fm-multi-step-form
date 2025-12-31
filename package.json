@@ -7,12 +7,26 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "lint": "eslint",
-    "format": "prettier \"**/*.(c|m)[jt]s?(x)\"",
-    "check": "prettier --write \"**/*.(c|m)[jt]s?(x)\" && eslint --fix \"**/*.[jt]s?(x)\"",
+    "lint": "stylelint \"**/*.css\" && eslint",
+    "format": "stylelint \"**/*.css\" --fix && prettier --write \"**/*.(c|m)[jt]s?(x)\"",
+    "check": "stylelint \"**/*.css\" --fix && prettier --write \"**/*.(c|m)[jt]s?(x)\" && eslint --fix \"**/*.[jt]s?(x)\"",
     "prepare": "husky"
   },
   "license": "MIT",
+  "keywords": [
+    "tantack start",
+    "react",
+    "frontend mentor"
+  ],
+  "author": "Richard Cyrus <richard.cyrus@rcyrus.com> (https://www.richardcyrus.com)",
+  "bugs": {
+    "url": "https://github.com/richardcyrus/fm-multi-step-form/issues"
+  },
+  "homepage": "https://github.com/richardcyrus/fm-multi-step-form#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/richardcyrus/fm-multi-step-form.git"
+  },
   "dependencies": {
     "@tanstack/react-devtools": "^0.9.0",
     "@tanstack/react-router": "^1.144.0",
@@ -30,12 +44,16 @@
     "@tanstack/devtools-vite": "^0.4.0",
     "@tanstack/eslint-config": "^0.3.4",
     "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^25.0.3",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.2",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jest-dom": "^5.5.0",
+    "eslint-plugin-testing-library": "^7.15.4",
     "husky": "^9.1.7",
     "jsdom": "^27.4.0",
     "lint-staged": "^16.2.7",

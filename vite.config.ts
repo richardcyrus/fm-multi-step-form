@@ -20,6 +20,7 @@ const config = defineConfig({
   ],
   test: {
     environment: 'jsdom',
+    passWithNoTests: true,
     exclude: [
       ...configDefaults.exclude,
       '**/dist/**',
@@ -29,8 +30,8 @@ const config = defineConfig({
       '**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build,eslint,prettier}.config.*',
       '**/tests/e2e/**',
     ],
-    globals: true,
     include: ['./src/**/*.test.?(c|m)[jt]s?(x)'],
+    setupFiles: ['./vitest.setup.ts'],
   },
 })
 
