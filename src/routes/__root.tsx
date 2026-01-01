@@ -20,6 +20,29 @@ export const Route = createRootRoute({
     ],
     links: [
       {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: '/favicon-32x32.png',
+      },
+      {
+        rel: 'preconnect',
+        href: 'https://fonts.googleapis.com',
+      },
+      {
+        rel: 'preconnect',
+        href: 'https://fonts.gstatic.com',
+        crossOrigin: '',
+      },
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap',
+      },
+      {
+        rel: 'stylesheet',
+        href: 'https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css',
+      },
+      {
         rel: 'stylesheet',
         href: appCss,
       },

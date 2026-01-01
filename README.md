@@ -1,6 +1,6 @@
 # Frontend Mentor - Multi-step form solution <!-- omit in toc -->
 
-This is a solution to the [Multi-step form challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/multistep-form-YVAnSdqQBJ). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
+This is a solution to the [Multi-step form challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/multistep-form-YVAnSdqQBJ). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
 ## Table of contents <!-- omit in toc -->
 
@@ -8,6 +8,7 @@ This is a solution to the [Multi-step form challenge on Frontend Mentor](https:/
   - [The challenge](#the-challenge)
 - [My process](#my-process)
   - [Built with](#built-with)
+- [Useful resources](#useful-resources)
 - [Author](#author)
 
 ## Overview
@@ -39,6 +40,10 @@ Users should be able to:
 - Mobile-first workflow
 - [React](https://reactjs.org/) - JS library
 - [Tanstack Start](https://tanstack.com/start/latest) - React based framework
+
+### Useful resources
+
+- [OKLCH Color Picker & Converter](https://oklch.com/)
 
 ## Author
 

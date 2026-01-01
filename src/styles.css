@@ -1,8 +1,111 @@
+:root {
+  --color-black: oklch(0 0 0);
+  --color-blue-50: oklch(0.9831 0.008 278.64);
+  --color-blue-100: oklch(0.9685 0.0148 260.73);
+  --color-blue-200: oklch(0.8956 0.0531 240.62);
+  --color-blue-300: oklch(0.8067 0.096957 273.083);
+  --color-blue-700: oklch(0.4124 0.1195 255.97);
+  --color-blue-950: oklch(0.2877 0.0963 256.43);
+  --color-grey-500: oklch(0.686 0.0251 277.76);
+  --color-orange-300: oklch(0.8204 0.1138 52.02);
+  --color-purple-200: oklch(0.8869 0.0181 275.62);
+  --color-purple-400: oklch(0.6964 0.165 283.6);
+  --color-purple-500: oklch(0.5747 0.237 278.29);
+  --color-purple-600: oklch(0.5208 0.2692 274.01);
+  --color-red-400: oklch(0.7411 0.1465 14.51);
+  --color-red-450: oklch(0.6676 0.1686 16.24);
+  --color-red-500: oklch(0.625 0.2169 21.15);
+  --color-white: oklch(1 0 0);
+  --font-weight-bold: 700;
+  --font-weight-medium: 500;
+  --font-weight-regular: 400;
+  --spacing-0: 0rem;
+  --spacing-100: 0.5rem;
+  --spacing-200: 1rem;
+  --spacing-300: 1.5rem;
+  --spacing-400: 2rem;
+  --spacing-500: 2.5rem;
+  --spacing-700: 3.5rem;
+}
+
 body {
   font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
-    Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    Ubuntu,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  font-size: 1rem;
+  font-weight: var(--font-weight-regular);
+  font-style: normal;
+
+  background-color: var(--color-blue-100);
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.attribution {
+  font-size: 0.6875rem;
+  text-align: center;
+}
+
+.attribution a {
+  color: hsl(228, 45%, 44%);
+}
+
+.text-preset-1 {
+  font-size: 2rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.text-preset-2 {
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.text-preset-3-medium {
+  font-size: 1rem;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.text-preset-3-regular {
+  font-size: 1rem;
+  font-weight: var(--font-weight-regular);
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.text-preset-4-bold {
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.text-preset-4-medium {
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.text-preset-4-normal {
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-regular);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.text-preset-5 {
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-regular);
+  line-height: 1.2;
+  letter-spacing: 0;
 }
