@@ -54,13 +54,5 @@
         "allowed": true,
       },
     },
-    "CSS": {
-      "code_actions_on_format": {
-        "source.fixAll.stylelint": true,
-      },
-      "prettier": {
-        "allowed": true,
-      },
-    },
   },
 }

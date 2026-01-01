@@ -32,7 +32,7 @@ const config = defineConfig({
       '**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build,eslint,prettier}.config.*',
       '**/tests/e2e/**',
     ],
-    include: ['./src/**/*.test.?(c|m)[jt]s?(x)'],
+    include: ['./src/**/*.test.{js,jsx,ts,tsx}'],
     setupFiles: ['./vitest.setup.ts'],
   },
 })
