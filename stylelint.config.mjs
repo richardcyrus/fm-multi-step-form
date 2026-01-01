@@ -1,6 +1,6 @@
 /** @type {import("stylelint").Config} */
 export default {
-  extends: ['stylelint-config-clean-order'],
+  extends: ['stylelint-config-clean-order', 'stylelint-config-tailwindcss'],
   rules: {
     'declaration-block-no-redundant-longhand-properties': [
       true,

@@ -16,6 +16,9 @@ const config = {
   tabWidth: 2,
   trailingComma: 'all',
   useTabs: false,
+  plugins: ['prettier-plugin-tailwindcss'],
+  tailwindStylesheet: './src/styles.css',
+  tailwindFunctions: ['cva'],
 }
 
 export default config

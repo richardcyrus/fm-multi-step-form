@@ -8,8 +8,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "lint": "stylelint \"**/*.css\" && eslint",
-    "format": "stylelint \"**/*.css\" --fix && prettier --write \"**/*.(c|m)[jt]s?(x)\"",
-    "check": "stylelint \"**/*.css\" --fix && prettier --write \"**/*.(c|m)[jt]s?(x)\" && eslint --fix \"**/*.[jt]s?(x)\"",
+    "format": "stylelint \"**/*.css\" --fix && prettier --write \"**/*.{js,jsx,cjs,mjs,ts,tsx,mts,css}\"",
+    "check": "stylelint \"**/*.css\" --fix && prettier --write \"**/*.{js,jsx,cjs,mjs,ts,tsx,mts,css}\" && eslint --fix \"**/*.{js,jsx,cjs,mjs,ts,tsx,mts}\"",
     "prepare": "husky"
   },
   "license": "MIT",
@@ -28,15 +28,19 @@
     "url": "git+https://github.com/richardcyrus/fm-multi-step-form.git"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "^0.9.0",
     "@tanstack/react-router": "^1.144.0",
     "@tanstack/react-router-devtools": "^1.144.0",
     "@tanstack/react-router-ssr-query": "^1.144.0",
     "@tanstack/react-start": "^1.145.3",
     "@tanstack/router-plugin": "^1.145.2",
+    "class-variance-authority": "^0.7.1",
     "nitro": "latest",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.18",
     "vite-tsconfig-paths": "^6.0.3"
   },
   "devDependencies": {
@@ -58,9 +62,10 @@
     "jsdom": "^27.4.0",
     "lint-staged": "^16.2.7",
     "prettier": "^3.7.4",
+    "prettier-plugin-tailwindcss": "^0.7.2",
     "stylelint": "^16.26.1",
     "stylelint-config-clean-order": "^8.0.0",
-    "stylelint-config-standard": "^39.0.1",
+    "stylelint-config-tailwindcss": "^1.0.0",
     "stylelint-order": "^7.0.1",
     "typescript": "^5.9.3",
     "vite": "^7.3.0",
@@ -71,7 +76,7 @@
     "*.css": [
       "stylelint --fix"
     ],
-    "*.{js,jsx,cjs,mjs,ts,tsx,mts}": [
+    "*.{js,jsx,cjs,mjs,ts,tsx,mts,css}": [
       "prettier --write",
       "eslint --fix"
     ]

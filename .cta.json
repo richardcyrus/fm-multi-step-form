@@ -2,7 +2,7 @@
   "projectName": "fm-multi-step-form",
   "mode": "file-router",
   "typescript": true,
-  "tailwind": false,
+  "tailwind": true,
   "packageManager": "pnpm",
   "addOnOptions": {},
   "git": true,
