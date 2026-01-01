@@ -44,6 +44,7 @@ Users should be able to:
 ### Useful resources
 
 - [OKLCH Color Picker & Converter](https://oklch.com/)
+- [Stylelint Config: Tailwind CSS](https://github.com/dreamsicle-io/stylelint-config-tailwindcss)
 
 ## Author
 

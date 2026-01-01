@@ -40,10 +40,6 @@ export const Route = createRootRoute({
       },
       {
         rel: 'stylesheet',
-        href: 'https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css',
-      },
-      {
-        rel: 'stylesheet',
         href: appCss,
       },
     ],

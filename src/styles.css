@@ -1,40 +1,35 @@
 @import 'tailwindcss';
 
 @theme {
+  /* stylelint-disable-next-line custom-property-pattern */
   --color-*: initial;
   --color-transparent: transparent;
-  --color-current: currentColor;
-  --color-white: oklch(1 0 0);
-  --color-black: oklch(0 0 0);
-
-  --color-blue-50: oklch(0.9831 0.008 278.64);
-  --color-blue-100: oklch(0.9685 0.0148 260.73);
-  --color-blue-200: oklch(0.8956 0.0531 240.62);
-  --color-blue-300: oklch(0.8067 0.096957 273.083);
-  --color-blue-700: oklch(0.4124 0.1195 255.97);
-  --color-blue-950: oklch(0.2877 0.0963 256.43);
-
-  --color-grey-500: oklch(0.686 0.0251 277.76);
-
-  --color-orange-300: oklch(0.8204 0.1138 52.02);
-
-  --color-purple-200: oklch(0.8869 0.0181 275.62);
-  --color-purple-400: oklch(0.6964 0.165 283.6);
-  --color-purple-500: oklch(0.5747 0.237 278.29);
-  --color-purple-600: oklch(0.5208 0.2692 274.01);
-
-  --color-red-400: oklch(0.7411 0.1465 14.51);
-  --color-red-450: oklch(0.6676 0.1686 16.24);
-  --color-red-500: oklch(0.625 0.2169 21.15);
-
+  --color-current: currentcolor;
+  --color-white: oklch(100% 0 0deg);
+  --color-black: oklch(0% 0 0deg);
+  --color-blue-50: oklch(98.31% 0.008 278.64deg);
+  --color-blue-100: oklch(96.85% 0.0148 260.73deg);
+  --color-blue-200: oklch(89.56% 0.0531 240.62deg);
+  --color-blue-300: oklch(80.67% 0.096957 273.083deg);
+  --color-blue-700: oklch(41.24% 0.1195 255.97deg);
+  --color-blue-950: oklch(28.77% 0.0963 256.43deg);
+  --color-grey-500: oklch(68.6% 0.0251 277.76deg);
+  --color-orange-300: oklch(82.04% 0.1138 52.02deg);
+  --color-purple-200: oklch(88.69% 0.0181 275.62deg);
+  --color-purple-400: oklch(69.64% 0.165 283.6deg);
+  --color-purple-500: oklch(57.47% 0.237 278.29deg);
+  --color-purple-600: oklch(52.08% 0.2692 274.01deg);
+  --color-red-400: oklch(74.11% 0.1465 14.51deg);
+  --color-red-450: oklch(66.76% 0.1686 16.24deg);
+  --color-red-500: oklch(62.5% 0.2169 21.15deg);
+  /* stylelint-disable-next-line custom-property-pattern */
   --font-*: initial;
-  --font-sans: Ubuntu, ui-sans-serif, system-ui, sans-serif;
-
+  --font-sans: ubuntu, ui-sans-serif, system-ui, sans-serif;
+  /* stylelint-disable-next-line custom-property-pattern */
   --font-weight-*: initial;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-bold: 700;
-
   --spacing-0: 0rem;
   --spacing-100: 0.5rem;
   --spacing-200: 1rem;
@@ -57,10 +52,10 @@ body {
 }
 
 .attribution a {
-  color: hsl(228, 45%, 44%);
+  color: hsl(228deg 45% 44%);
 }
 
-/*.text-preset-1 {
+/* .text-preset-1 {
   font-size: 2rem;
   font-weight: var(--font-weight-bold);
   line-height: 1.2;
@@ -114,4 +109,4 @@ body {
   font-weight: var(--font-weight-regular);
   line-height: 1.2;
   letter-spacing: 0;
-}*/
+} */

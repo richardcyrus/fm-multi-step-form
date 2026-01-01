@@ -1,7 +1,7 @@
 //  @ts-check
 
-/** @type {import('prettier').Config} */
-const config = {
+/** @type {import('prettier').Config & import('prettier-plugin-tailwindcss').PluginOptions} */
+export default {
   arrowParens: 'always',
   embeddedLanguageFormatting: 'auto',
   htmlWhitespaceSensitivity: 'css',
@@ -18,7 +18,5 @@ const config = {
   useTabs: false,
   plugins: ['prettier-plugin-tailwindcss'],
   tailwindStylesheet: './src/styles.css',
-  tailwindFunctions: ['cva'],
+  tailwindFunctions: ['cva', 'cx'],
 }
-
-export default config

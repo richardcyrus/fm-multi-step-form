@@ -1,6 +1,9 @@
 /** @type {import("stylelint").Config} */
 export default {
-  extends: ['stylelint-config-clean-order', 'stylelint-config-tailwindcss'],
+  extends: [
+    'stylelint-config-standard',
+    '@dreamsicle.io/stylelint-config-tailwindcss',
+  ],
   rules: {
     'declaration-block-no-redundant-longhand-properties': [
       true,

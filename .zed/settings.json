@@ -11,6 +11,11 @@
         },
       },
     },
+    "tailwindcss-language-server": {
+      "settings": {
+        "classFunctions": ["cva", "cx"],
+      },
+    },
   },
   "languages": {
     "JavaScript": {
