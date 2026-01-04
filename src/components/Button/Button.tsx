@@ -21,8 +21,8 @@ const buttonStyles = cva(
   },
 )
 
-export type ButtonProps = VariantProps<typeof buttonStyles> &
-  React.ComponentProps<'button'>
+export interface ButtonProps
+  extends VariantProps<typeof buttonStyles>, React.ComponentProps<'button'> {}
 
 export function Button({
   className,

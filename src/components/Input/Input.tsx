@@ -4,7 +4,7 @@ type InputProps = {
   label: string
 }
 
-export type FieldProps = InputProps & React.ComponentProps<'input'>
+export interface FieldProps extends InputProps, React.ComponentProps<'input'> {}
 
 export function TextField({ label, name, placeholder, ...props }: FieldProps) {
   return (
