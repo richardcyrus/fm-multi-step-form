@@ -5,14 +5,14 @@ import { TextField } from './Input'
 
 describe('TextField Component', () => {
   test('renders label with correct text', () => {
-    render(<TextField label="Full Name" name="fullName" />)
+    render(<TextField fieldType="text" label="Full Name" name="fullName" />)
     const label = screen.getByText('Full Name')
 
     expect(label).toBeInTheDocument()
   })
 
   test('renders input with correct name and id attributes', () => {
-    render(<TextField label="Email" name="email" />)
+    render(<TextField fieldType="text" label="Email" name="email" />)
     const input = screen.getByRole('textbox')
 
     expect(input).toHaveAttribute('name', 'email')
@@ -20,7 +20,7 @@ describe('TextField Component', () => {
   })
 
   test('renders input with correct type attribute', () => {
-    render(<TextField label="Name" name="name" />)
+    render(<TextField fieldType="text" label="Name" name="name" />)
     const input = screen.getByRole('textbox')
 
     expect(input).toHaveAttribute('type', 'text')
@@ -29,6 +29,7 @@ describe('TextField Component', () => {
   test('renders placeholder when provided', () => {
     render(
       <TextField
+        fieldType="text"
         label="Username"
         name="username"
         placeholder="Enter your username"
@@ -40,7 +41,7 @@ describe('TextField Component', () => {
   })
 
   test('updates value when user types', () => {
-    render(<TextField label="Name" name="name" />)
+    render(<TextField fieldType="text" label="Name" name="name" />)
     const input = screen.getByRole('textbox')
 
     fireEvent.change(input, { target: { value: 'John Doe' } })
@@ -50,7 +51,14 @@ describe('TextField Component', () => {
 
   test('calls onChange callback when input value changes', () => {
     const handleChange = vi.fn()
-    render(<TextField label="Name" name="name" onChange={handleChange} />)
+    render(
+      <TextField
+        fieldType="text"
+        label="Name"
+        name="name"
+        onChange={handleChange}
+      />,
+    )
     const input = screen.getByRole('textbox')
 
     fireEvent.change(input, { target: { value: 'Alice' } })
@@ -67,7 +75,14 @@ describe('TextField Component', () => {
 
   test('calls onBlur callback when input loses focus', () => {
     const handleBlur = vi.fn()
-    render(<TextField label="Name" name="name" onBlur={handleBlur} />)
+    render(
+      <TextField
+        fieldType="text"
+        label="Name"
+        name="name"
+        onBlur={handleBlur}
+      />,
+    )
     const input = screen.getByRole('textbox')
 
     fireEvent.blur(input)
@@ -77,7 +92,14 @@ describe('TextField Component', () => {
 
   test('calls onFocus callback when input receives focus', () => {
     const handleFocus = vi.fn()
-    render(<TextField label="Name" name="name" onFocus={handleFocus} />)
+    render(
+      <TextField
+        fieldType="text"
+        label="Name"
+        name="name"
+        onFocus={handleFocus}
+      />,
+    )
     const input = screen.getByRole('textbox')
 
     fireEvent.focus(input)
@@ -86,14 +108,18 @@ describe('TextField Component', () => {
   })
 
   test('respects disabled attribute', () => {
-    render(<TextField label="Name" name="name" disabled={true} />)
+    render(
+      <TextField fieldType="text" label="Name" name="name" disabled={true} />,
+    )
     const input = screen.getByRole('textbox')
 
     expect(input).toBeDisabled()
   })
 
   test('respects required attribute', () => {
-    render(<TextField label="Name" name="name" required={true} />)
+    render(
+      <TextField fieldType="text" label="Name" name="name" required={true} />,
+    )
     const input = screen.getByRole('textbox')
 
     expect(input).toBeRequired()
@@ -101,7 +127,12 @@ describe('TextField Component', () => {
 
   test('applies custom className via props', () => {
     const { container } = render(
-      <TextField label="Name" name="name" className="custom-class" />,
+      <TextField
+        fieldType="text"
+        label="Name"
+        name="name"
+        className="custom-class"
+      />,
     )
     const input = container.querySelector('input.custom-class')
 
@@ -109,7 +140,7 @@ describe('TextField Component', () => {
   })
 
   test('associates label with input correctly', () => {
-    render(<TextField label="Email Address" name="email" />)
+    render(<TextField fieldType="text" label="Email Address" name="email" />)
     const label = screen.getByLabelText('Email Address', { exact: false })
 
     expect(label).toBeInTheDocument()
@@ -119,6 +150,7 @@ describe('TextField Component', () => {
   test('handles multiple attributes passed as spread props', () => {
     render(
       <TextField
+        fieldType="text"
         label="Phone"
         name="phone"
         placeholder="(555) 123-4567"
@@ -136,6 +168,7 @@ describe('TextField Component', () => {
   test('input element is accessible', () => {
     render(
       <TextField
+        fieldType="text"
         label="Accessible Input"
         name="accessible"
         aria-describedby="input-description"

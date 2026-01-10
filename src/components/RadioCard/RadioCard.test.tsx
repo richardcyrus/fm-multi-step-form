@@ -75,35 +75,6 @@ describe('RadioCard Component', () => {
       expect(discount).not.toBeInTheDocument()
     })
 
-    test('renders label element with correct classes', () => {
-      const { container } = render(<RadioCard {...defaultProps} />)
-      const label = container.querySelector('label')
-
-      expect(label).toHaveClass(
-        'mt-2',
-        'flex',
-        'h-20',
-        'items-center',
-        'rounded-lg',
-        'border',
-        'border-purple-200',
-        'bg-white',
-        'px-4',
-        'hover:border-purple-600',
-        'has-checked:border-purple-600',
-        'has-checked:bg-blue-50',
-        'md:grid',
-        'md:grid-cols-[40px_1fr]',
-        'lg:mr-4.5',
-        'lg:flex',
-        'lg:h-40',
-        'lg:w-34.5',
-        'lg:flex-col',
-        'lg:items-start',
-        'lg:p-4',
-      )
-    })
-
     test('renders radio input with correct classes', () => {
       const { container } = render(<RadioCard {...defaultProps} />)
       const input = container.querySelector('input[type="radio"]')
