@@ -32,7 +32,7 @@ export function RadioCard({
         {...props}
       />
       <span>
-        <img src={icon} alt="" />
+        <img src={icon} alt={`${label} icon`} />
       </span>
       <span className="flex flex-col pl-4 md:grid md:grid-cols-2 lg:flex lg:pt-6.5 lg:pl-0">
         <span className="inline-flex flex-col">
