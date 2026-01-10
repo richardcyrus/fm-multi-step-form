@@ -8,12 +8,12 @@ export interface FieldProps extends InputProps, React.ComponentProps<'input'> {}
 
 export function TextField({ label, name, placeholder, ...props }: FieldProps) {
   return (
-    <div className="space-y-2">
+    <div className="group space-y-2">
       <label htmlFor={name} className="flex justify-between">
         <span className="inline-block text-sm leading-[1.2] font-normal tracking-normal text-blue-950">
           {label}
         </span>
-        <span className="hidden text-sm leading-[1.2] font-bold text-red-500">
+        <span className="hidden text-sm leading-[1.2] font-bold text-red-500 group-has-invalid:inline-block">
           This field is required
         </span>
       </label>
