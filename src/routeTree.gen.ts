@@ -9,38 +9,117 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as OnboardingRouteRouteImport } from './routes/_onboarding/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OnboardingYourInfoRouteImport } from './routes/_onboarding/your-info'
+import { Route as OnboardingThankYouRouteImport } from './routes/_onboarding/thank-you'
+import { Route as OnboardingSummaryRouteImport } from './routes/_onboarding/summary'
+import { Route as OnboardingSelectPlansRouteImport } from './routes/_onboarding/select-plans'
+import { Route as OnboardingAddonsRouteImport } from './routes/_onboarding/addons'
 
+const OnboardingRouteRoute = OnboardingRouteRouteImport.update({
+  id: '/_onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingYourInfoRoute = OnboardingYourInfoRouteImport.update({
+  id: '/your-info',
+  path: '/your-info',
+  getParentRoute: () => OnboardingRouteRoute,
+} as any)
+const OnboardingThankYouRoute = OnboardingThankYouRouteImport.update({
+  id: '/thank-you',
+  path: '/thank-you',
+  getParentRoute: () => OnboardingRouteRoute,
+} as any)
+const OnboardingSummaryRoute = OnboardingSummaryRouteImport.update({
+  id: '/summary',
+  path: '/summary',
+  getParentRoute: () => OnboardingRouteRoute,
+} as any)
+const OnboardingSelectPlansRoute = OnboardingSelectPlansRouteImport.update({
+  id: '/select-plans',
+  path: '/select-plans',
+  getParentRoute: () => OnboardingRouteRoute,
+} as any)
+const OnboardingAddonsRoute = OnboardingAddonsRouteImport.update({
+  id: '/addons',
+  path: '/addons',
+  getParentRoute: () => OnboardingRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/addons': typeof OnboardingAddonsRoute
+  '/select-plans': typeof OnboardingSelectPlansRoute
+  '/summary': typeof OnboardingSummaryRoute
+  '/thank-you': typeof OnboardingThankYouRoute
+  '/your-info': typeof OnboardingYourInfoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/addons': typeof OnboardingAddonsRoute
+  '/select-plans': typeof OnboardingSelectPlansRoute
+  '/summary': typeof OnboardingSummaryRoute
+  '/thank-you': typeof OnboardingThankYouRoute
+  '/your-info': typeof OnboardingYourInfoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_onboarding': typeof OnboardingRouteRouteWithChildren
+  '/_onboarding/addons': typeof OnboardingAddonsRoute
+  '/_onboarding/select-plans': typeof OnboardingSelectPlansRoute
+  '/_onboarding/summary': typeof OnboardingSummaryRoute
+  '/_onboarding/thank-you': typeof OnboardingThankYouRoute
+  '/_onboarding/your-info': typeof OnboardingYourInfoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/addons'
+    | '/select-plans'
+    | '/summary'
+    | '/thank-you'
+    | '/your-info'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/addons'
+    | '/select-plans'
+    | '/summary'
+    | '/thank-you'
+    | '/your-info'
+  id:
+    | '__root__'
+    | '/'
+    | '/_onboarding'
+    | '/_onboarding/addons'
+    | '/_onboarding/select-plans'
+    | '/_onboarding/summary'
+    | '/_onboarding/thank-you'
+    | '/_onboarding/your-info'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  OnboardingRouteRoute: typeof OnboardingRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_onboarding': {
+      id: '/_onboarding'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof OnboardingRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +127,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_onboarding/your-info': {
+      id: '/_onboarding/your-info'
+      path: '/your-info'
+      fullPath: '/your-info'
+      preLoaderRoute: typeof OnboardingYourInfoRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/thank-you': {
+      id: '/_onboarding/thank-you'
+      path: '/thank-you'
+      fullPath: '/thank-you'
+      preLoaderRoute: typeof OnboardingThankYouRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/summary': {
+      id: '/_onboarding/summary'
+      path: '/summary'
+      fullPath: '/summary'
+      preLoaderRoute: typeof OnboardingSummaryRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/select-plans': {
+      id: '/_onboarding/select-plans'
+      path: '/select-plans'
+      fullPath: '/select-plans'
+      preLoaderRoute: typeof OnboardingSelectPlansRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
+    '/_onboarding/addons': {
+      id: '/_onboarding/addons'
+      path: '/addons'
+      fullPath: '/addons'
+      preLoaderRoute: typeof OnboardingAddonsRouteImport
+      parentRoute: typeof OnboardingRouteRoute
+    }
   }
 }
 
+interface OnboardingRouteRouteChildren {
+  OnboardingAddonsRoute: typeof OnboardingAddonsRoute
+  OnboardingSelectPlansRoute: typeof OnboardingSelectPlansRoute
+  OnboardingSummaryRoute: typeof OnboardingSummaryRoute
+  OnboardingThankYouRoute: typeof OnboardingThankYouRoute
+  OnboardingYourInfoRoute: typeof OnboardingYourInfoRoute
+}
+
+const OnboardingRouteRouteChildren: OnboardingRouteRouteChildren = {
+  OnboardingAddonsRoute: OnboardingAddonsRoute,
+  OnboardingSelectPlansRoute: OnboardingSelectPlansRoute,
+  OnboardingSummaryRoute: OnboardingSummaryRoute,
+  OnboardingThankYouRoute: OnboardingThankYouRoute,
+  OnboardingYourInfoRoute: OnboardingYourInfoRoute,
+}
+
+const OnboardingRouteRouteWithChildren = OnboardingRouteRoute._addFileChildren(
+  OnboardingRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  OnboardingRouteRoute: OnboardingRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

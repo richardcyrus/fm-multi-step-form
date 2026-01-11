@@ -34,7 +34,6 @@
     "@tanstack/react-router-devtools": "^1.144.0",
     "@tanstack/react-router-ssr-query": "^1.144.0",
     "@tanstack/react-start": "^1.145.3",
-    "@tanstack/router-plugin": "^1.145.2",
     "class-variance-authority": "^0.7.1",
     "nitro": "latest",
     "react": "^19.2.3",
@@ -48,6 +47,7 @@
     "@eslint/compat": "^2.0.0",
     "@tanstack/devtools-vite": "^0.4.0",
     "@tanstack/eslint-config": "^0.3.4",
+    "@tanstack/router-plugin": "^1.145.2",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.1",
@@ -81,5 +81,6 @@
       "prettier --write",
       "eslint --fix"
     ]
-  }
+  },
+  "packageManager": "pnpm@10.28.0+sha512.05df71d1421f21399e053fde567cea34d446fa02c76571441bfc1c7956e98e363088982d940465fd34480d4d90a0668bc12362f8aa88000a64e83d0b0e47be48"
 }
