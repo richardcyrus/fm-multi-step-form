@@ -14,6 +14,9 @@ export default [
     ...testingLibrary.configs['flat/react'],
     ...jestDom.configs['flat/recommended'],
     files: ['**/__tests__/**/*.{js,jsx,ts,tsx}', '**/*.test.{js,jsx,ts,tsx}'],
+    rules: {
+      'jest-dom/prefer-to-have-value': 'off',
+    },
   },
   eslintConfigPrettier,
 ]

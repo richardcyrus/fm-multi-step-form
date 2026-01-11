@@ -24,7 +24,7 @@ describe('RadioCard Component', () => {
       const radioInput = screen.getByRole('radio')
 
       // @eslint-disable-next-line jest-dom/prefer-to-have-value
-      expect(radioInput).toHaveValue('arcade')
+      expect(radioInput).toHaveAttribute('value', 'arcade')
     })
 
     test('renders icon image with correct src', () => {
@@ -247,7 +247,7 @@ describe('RadioCard Component', () => {
       const radioInput = screen.getByRole('radio')
 
       // @eslint-disable-next-line jest-dom/prefer-to-have-value
-      expect(radioInput).toHaveValue('advanced')
+      expect(radioInput).toHaveAttribute('value', 'advanced')
     })
 
     test('handles labels with spaces correctly', () => {
@@ -255,7 +255,7 @@ describe('RadioCard Component', () => {
       const radioInput = screen.getByRole('radio')
 
       // @eslint-disable-next-line jest-dom/prefer-to-have-value
-      expect(radioInput).toHaveValue('pro plan')
+      expect(radioInput).toHaveAttribute('value', 'pro plan')
     })
 
     test('handles labels with special characters correctly', () => {
@@ -263,7 +263,7 @@ describe('RadioCard Component', () => {
       const radioInput = screen.getByRole('radio')
 
       // @eslint-disable-next-line jest-dom/prefer-to-have-value
-      expect(radioInput).toHaveValue('pro-plus!')
+      expect(radioInput).toHaveAttribute('value', 'pro-plus!')
     })
   })
 })

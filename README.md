@@ -38,6 +38,7 @@ Users should be able to:
 - Flexbox
 - CSS Grid
 - Mobile-first workflow
+- [TailwindCSS](https://tailwindcss.com/)
 - [React](https://reactjs.org/) - JS library
 - [Tanstack Start](https://tanstack.com/start/latest) - React based framework
 
@@ -45,6 +46,8 @@ Users should be able to:
 
 - [OKLCH Color Picker & Converter](https://oklch.com/)
 - [Stylelint Config: Tailwind CSS](https://github.com/dreamsicle-io/stylelint-config-tailwindcss)
+- [Tailwind CSS Checkbox](https://www.material-tailwind.com/docs/html/checkbox)
+- [Tailwind CSS Toggle Switch](https://www.material-tailwind.com/docs/html/switch)
 
 ## Author
 
