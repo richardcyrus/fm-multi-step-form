@@ -7,7 +7,9 @@ export const Route = createFileRoute('/_onboarding/addons')({
 function AddonsComponent() {
   return (
     <>
-      <h1 className="text-2xl font-bold text-blue-950">Pick add-ons</h1>
+      <h1 className="text-2xl font-bold text-blue-950 md:text-[2rem]">
+        Pick add-ons
+      </h1>
       <p className="mt-2 text-base font-normal text-grey-500">
         Add-ons help enhance your gaming experience.
       </p>

@@ -7,59 +7,85 @@ export const Route = createFileRoute('/_onboarding')({
 function RouteComponent() {
   return (
     <>
-      <div className="bg-[url(/bg-sidebar-mobile.svg)] bg-contain bg-no-repeat">
-        <aside className="py-8">
-          <div className="flex justify-center">
-            <ul>
-              <li className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white has-data-[status=active]:border-none has-data-[status=active]:bg-blue-200">
-                <Link
-                  to="/your-info"
-                  className="text-center text-sm font-bold text-white"
-                  activeProps={{
-                    className: `data-[status=active]:text-blue-950`,
-                  }}
-                >
-                  1
-                </Link>
-              </li>
-              <li className="ml-4 inline-flex h-8 w-8 items-center justify-center rounded-full border border-white has-data-[status=active]:border-none has-data-[status=active]:bg-blue-200">
-                <Link
-                  to="/select-plans"
-                  className="text-center text-sm font-bold text-white"
-                  activeProps={{
-                    className: `data-[status=active]:text-blue-950`,
-                  }}
-                >
-                  2
-                </Link>
-              </li>
-              <li className="ml-4 inline-flex h-8 w-8 items-center justify-center rounded-full border border-white has-data-[status=active]:border-none has-data-[status=active]:bg-blue-200">
-                <Link
-                  to="/addons"
-                  className="text-center text-sm font-bold text-white"
-                  activeProps={{
-                    className: `data-[status=active]:text-blue-950`,
-                  }}
-                >
-                  3
-                </Link>
-              </li>
-              <li className="ml-4 inline-flex h-8 w-8 items-center justify-center rounded-full border border-white has-data-[status=active]:border-none has-data-[status=active]:bg-blue-200">
-                <Link
-                  to="/summary"
-                  className="text-center text-sm font-bold text-white"
-                  activeProps={{
-                    className: `data-[status=active]:text-blue-950`,
-                  }}
-                >
-                  4
-                </Link>
-              </li>
-            </ul>
+      <div className="bg-[url(/bg-sidebar-mobile.svg)] bg-contain bg-no-repeat md:grid md:min-h-lvh md:place-content-center md:bg-none">
+        <div className="md:grid md:max-w-171.5 md:grid-cols-[238px_minmax(0,1fr)] md:rounded-[15px] md:bg-white md:shadow-lg lg:max-w-235 lg:grid-cols-[306px_minmax(0,1fr)]">
+          <aside className="py-8 md:p-4">
+            <div className="flex justify-center md:min-h-142 md:justify-start md:rounded-[15px] md:bg-[url(/bg-sidebar-desktop.svg)] md:bg-size-[274px_568px] md:bg-no-repeat md:px-7 md:pt-10 lg:bg-auto lg:bg-center">
+              <ul>
+                <li className="inline-flex md:flex">
+                  <Link to="/your-info" className="md:flex">
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white in-data-[status=active]:border-none in-data-[status=active]:bg-blue-200">
+                      <span className="text-center text-sm font-bold text-white in-data-[status=active]:text-blue-950">
+                        1
+                      </span>
+                    </span>
+                    <span className="hidden md:flex md:flex-col md:pl-4">
+                      <span className="text-xs font-normal text-blue-300 uppercase">
+                        Step 1
+                      </span>
+                      <span className="text-sm font-bold text-white uppercase">
+                        Your Info
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+                <li className="ml-4 inline-flex md:mt-8 md:ml-0 md:flex">
+                  <Link to="/select-plans" className="md:flex">
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white in-data-[status=active]:border-none in-data-[status=active]:bg-blue-200">
+                      <span className="text-center text-sm font-bold text-white in-data-[status=active]:text-blue-950">
+                        2
+                      </span>
+                    </span>
+                    <span className="hidden md:flex md:flex-col md:pl-4">
+                      <span className="text-xs font-normal text-blue-300 uppercase">
+                        Step 2
+                      </span>
+                      <span className="text-sm font-bold text-white uppercase">
+                        Select Plan
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+                <li className="ml-4 inline-flex md:mt-8 md:ml-0 md:flex">
+                  <Link to="/addons" className="md:flex">
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white in-data-[status=active]:border-none in-data-[status=active]:bg-blue-200">
+                      <span className="text-center text-sm font-bold text-white in-data-[status=active]:text-blue-950">
+                        3
+                      </span>
+                    </span>
+                    <span className="hidden md:flex md:flex-col md:pl-4">
+                      <span className="text-xs font-normal text-blue-300 uppercase">
+                        Step 3
+                      </span>
+                      <span className="text-sm font-bold text-white uppercase">
+                        Add-ons
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+                <li className="ml-4 inline-flex md:mt-8 md:ml-0 md:flex">
+                  <Link to="/summary" className="md:flex">
+                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white in-data-[status=active]:border-none in-data-[status=active]:bg-blue-200">
+                      <span className="text-center text-sm font-bold text-white in-data-[status=active]:text-blue-950">
+                        4
+                      </span>
+                    </span>
+                    <span className="hidden md:flex md:flex-col md:pl-4">
+                      <span className="text-xs font-normal text-blue-300 uppercase">
+                        Step 4
+                      </span>
+                      <span className="text-sm font-bold text-white uppercase">
+                        Summary
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </aside>
+          <div className="mx-4 rounded-[10px] bg-white px-6 py-8 shadow-lg md:pt-11 md:pr-14 md:pb-8 md:shadow-none">
+            <Outlet />
           </div>
-        </aside>
-        <div className="mx-4 rounded-[10px] bg-white px-6 py-8">
-          <Outlet />
         </div>
       </div>
     </>

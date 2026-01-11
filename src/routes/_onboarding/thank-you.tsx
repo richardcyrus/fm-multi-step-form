@@ -6,9 +6,9 @@ export const Route = createFileRoute('/_onboarding/thank-you')({
 
 function ThankYouComponent() {
   return (
-    <div className="px-6 py-20">
+    <div className="px-6 py-20 md:grid md:min-h-full md:grid-cols-1 md:place-content-center">
       <div className="grid grid-cols-1">
-        <div className="h-[56px] w-[56px] justify-self-center">
+        <div className="h-[56px] w-[56px] justify-self-center md:h-20 md:w-20">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
             <g fill="none">
               <circle cx="40" cy="40" r="40" fill="#F9818E" />
@@ -24,7 +24,7 @@ function ThankYouComponent() {
           </svg>
         </div>
       </div>
-      <h1 className="mt-6 text-center text-2xl font-bold text-blue-950">
+      <h1 className="mt-6 text-center text-2xl font-bold text-blue-950 md:text-[2rem]">
         Thank you!
       </h1>
       <p className="mt-2 text-center text-base font-normal text-grey-500">

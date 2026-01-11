@@ -7,7 +7,9 @@ export const Route = createFileRoute('/_onboarding/select-plans')({
 function SelectPlansComponent() {
   return (
     <>
-      <h1 className="text-2xl font-bold text-blue-950">Select your plan</h1>
+      <h1 className="text-2xl font-bold text-blue-950 md:text-[2rem]">
+        Select your plan
+      </h1>
       <p className="mt-2 text-base font-normal text-grey-500">
         You have the option of monthly or yearly billing.
       </p>
