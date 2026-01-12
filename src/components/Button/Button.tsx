@@ -5,7 +5,7 @@ import type { VariantProps } from 'class-variance-authority'
 
 const buttonStyles = cva(
   [
-    'inline-flex min-h-12 min-w-[7.6875rem] cursor-pointer items-center justify-center self-start rounded-lg border-none p-0 text-center font-sans text-base font-medium focus:outline-transparent focus:outline-solid',
+    'inline-flex min-h-10 min-w-24.25 cursor-pointer items-center justify-center self-start rounded-sm border-none p-0 text-center font-sans text-sm font-medium focus:outline-transparent focus:outline-solid md:min-h-12 md:min-w-30.75 md:rounded-lg md:text-base',
   ],
   {
     variants: {
