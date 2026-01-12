@@ -9,6 +9,9 @@ import testingLibrary from 'eslint-plugin-testing-library'
 const gitignorePath = fileURLToPath(new URL('.gitignore', import.meta.url))
 export default [
   ...tanstackConfig,
+  {
+    ignores: ['eslint.config.js', 'prettier.config.js'],
+  },
   includeIgnoreFile(gitignorePath, 'Imported .gitignore patterns'),
   {
     ...testingLibrary.configs['flat/react'],

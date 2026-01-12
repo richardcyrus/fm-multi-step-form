@@ -7,9 +7,9 @@ export const Route = createFileRoute('/_onboarding')({
 function RouteComponent() {
   return (
     <>
-      <div className="bg-[url(/bg-sidebar-mobile.svg)] bg-contain bg-no-repeat md:grid md:min-h-lvh md:place-content-center md:bg-none">
-        <div className="md:grid md:max-w-171.5 md:grid-cols-[238px_minmax(0,1fr)] md:rounded-[15px] md:bg-white md:shadow-lg lg:max-w-235 lg:grid-cols-[306px_minmax(0,1fr)]">
-          <aside className="py-8 md:p-4">
+      <div className="min-h-lvh bg-[url(/bg-sidebar-mobile.svg)] bg-contain bg-no-repeat md:grid md:place-content-center md:bg-none">
+        <div className="flex min-h-lvh flex-col md:grid md:min-h-auto md:max-w-171.5 md:grid-cols-[238px_minmax(0,1fr)] md:grid-rows-[minmax(0,1fr)_80px] md:rounded-[15px] md:bg-white md:shadow-lg lg:max-w-235 lg:grid-cols-[306px_minmax(0,1fr)]">
+          <aside className="py-8 md:row-span-full md:p-4">
             <div className="flex justify-center md:min-h-142 md:justify-start md:rounded-[15px] md:bg-[url(/bg-sidebar-desktop.svg)] md:bg-size-[274px_568px] md:bg-no-repeat md:px-7 md:pt-10 lg:bg-auto lg:bg-center">
               <ul>
                 <li className="inline-flex md:flex">
@@ -83,9 +83,7 @@ function RouteComponent() {
               </ul>
             </div>
           </aside>
-          <div className="mx-4 rounded-[10px] bg-white px-6 py-8 shadow-lg md:pt-11 md:pr-14 md:pb-8 md:shadow-none">
-            <Outlet />
-          </div>
+          <Outlet />
         </div>
       </div>
     </>

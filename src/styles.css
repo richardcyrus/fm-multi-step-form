@@ -40,7 +40,7 @@
 }
 
 body {
-  @apply bg-blue-100 font-sans text-base font-normal md:min-h-lvh;
+  @apply min-h-lvh bg-blue-100 font-sans text-base font-normal;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
