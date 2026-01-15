@@ -17,7 +17,7 @@ export function ToggleSwitch({
     <div className="group flex min-h-12 min-w-73.75 items-center justify-center gap-6 rounded-lg bg-blue-50 has-disabled:pointer-events-none">
       <label
         htmlFor="toggle-switch"
-        className="cursor-pointer text-sm font-medium text-blue-950 group-has-checked:text-grey-500"
+        className="cursor-pointer text-sm font-medium text-blue-950 group-has-checked:text-grey-500 lg:tracking-widest"
       >
         {leftLabel}
       </label>
@@ -35,7 +35,7 @@ export function ToggleSwitch({
       </div>
       <label
         htmlFor="toggle-switch"
-        className="cursor-pointer text-sm font-medium text-grey-500 group-has-checked:text-blue-950"
+        className="cursor-pointer text-sm font-medium text-grey-500 group-has-checked:text-blue-950 lg:tracking-widest"
       >
         {rightLabel}
       </label>
