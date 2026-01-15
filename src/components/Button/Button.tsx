@@ -2,6 +2,7 @@ import React from 'react'
 import { cva } from 'class-variance-authority'
 import { twMerge } from 'tailwind-merge'
 import type { VariantProps } from 'class-variance-authority'
+import { useFormContext } from '@/hooks/form-context'
 
 const buttonStyles = cva(
   [
@@ -43,5 +44,29 @@ export function Button({
     >
       {children}
     </button>
+  )
+}
+
+export function SubmitButton({
+  className,
+  variant,
+  children,
+  ...props
+}: ButtonProps) {
+  const form = useFormContext()
+
+  return (
+    <form.Subscribe selector={(state) => state.isSubmitting}>
+      {(isSubmitting) => (
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className={twMerge(buttonStyles({ variant }), className)}
+          {...props}
+        >
+          {children}
+        </button>
+      )}
+    </form.Subscribe>
   )
 }

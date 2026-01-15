@@ -1,33 +1,44 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { TextField } from '@/components/Input'
-import { Button } from '@/components/Button'
+import type { z } from 'zod'
+import { useAppForm } from '@/hooks/form'
+import { gamingPlanSchema } from '@/lib/schema'
+import { useGamingPlanStore } from '@/store/store'
 
 export const Route = createFileRoute('/_onboarding/your-info')({
   component: YourInfoComponent,
 })
 
-const formFields = [
-  {
-    label: 'Name',
-    name: 'name',
-    fieldType: 'text',
-    placeholder: 'e.g Stephen King',
-  },
-  {
-    label: 'Email Address',
-    name: 'email_address',
-    fieldType: 'email',
-    placeholder: 'e.g stephenking@lorem.com',
-  },
-  {
-    label: 'Phone Number',
-    name: 'phone_number',
-    fieldType: 'tel',
-    placeholder: 'e.g +1 234 567 890',
-  },
-]
+const yourInfoSchema = gamingPlanSchema.pick({
+  full_name: true,
+  email_address: true,
+  phone_number: true,
+})
+
+type YourInfoSchema = z.infer<typeof yourInfoSchema>
 
 function YourInfoComponent() {
+  const navigate = Route.useNavigate()
+  const setData = useGamingPlanStore((state) => state.setData)
+
+  const full_name = useGamingPlanStore((state) => state.full_name)
+  const email_address = useGamingPlanStore((state) => state.email_address)
+  const phone_number = useGamingPlanStore((state) => state.phone_number)
+
+  const form = useAppForm({
+    defaultValues: {
+      full_name: full_name || '',
+      email_address: email_address || '',
+      phone_number: phone_number || '',
+    },
+    validators: {
+      onChange: yourInfoSchema,
+    },
+    onSubmit: ({ value }: { value: YourInfoSchema }) => {
+      setData(value)
+      navigate({ to: '/select-plans' })
+    },
+  })
+
   return (
     <>
       <div className="flex-1">
@@ -38,25 +49,57 @@ function YourInfoComponent() {
           <p className="mt-2 text-base font-normal text-grey-500">
             Please provide your name, email address, and phone number.
           </p>
-          <form action="" className="mt-6 md:mt-8 lg:mt-10">
+          <form
+            className="mt-6 md:mt-8 lg:mt-10"
+            onSubmit={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              form.handleSubmit()
+            }}
+            id="your-info"
+          >
             <div className="space-y-4 md:space-y-6">
-              {formFields.map((field, i) => (
-                <TextField
-                  key={i}
-                  label={field.label}
-                  name={field.name}
-                  fieldType={field.fieldType}
-                  placeholder={field.placeholder}
-                />
-              ))}
+              <form.AppField name="full_name">
+                {(field) => (
+                  <field.TextField
+                    label="Name"
+                    fieldType="text"
+                    placeholder="e.g. Stephen King"
+                  />
+                )}
+              </form.AppField>
+              <form.AppField name="email_address">
+                {(field) => (
+                  <field.TextField
+                    label="Email Address"
+                    fieldType="email"
+                    placeholder="e.g. stephenking@lorem.com"
+                  />
+                )}
+              </form.AppField>
+              <form.AppField name="phone_number">
+                {(field) => (
+                  <field.TextField
+                    label="Phone Number"
+                    fieldType="tel"
+                    placeholder="e.g. +1 234 567 890"
+                  />
+                )}
+              </form.AppField>
             </div>
           </form>
         </div>
       </div>
       <div className="inline-flex w-full justify-end bg-white p-4 md:pr-17.5 md:pl-10 lg:pr-25 lg:pl-21">
-        <Button variant="primary" type="submit" className="ml-auto">
-          Next Step
-        </Button>
+        <form.AppForm>
+          <form.SubmitButton
+            form="your-info"
+            variant="primary"
+            className="ml-auto"
+          >
+            Next Step
+          </form.SubmitButton>
+        </form.AppForm>
       </div>
     </>
   )
