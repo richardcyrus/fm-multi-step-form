@@ -31,7 +31,7 @@ function YourInfoComponent() {
   return (
     <>
       <div className="flex-1">
-        <div className="mx-4 rounded-[10px] bg-white px-6 py-8 shadow-lg md:pt-11 md:pr-14 md:pb-8 md:shadow-none">
+        <div className="mx-4 rounded-[10px] bg-white px-6 py-8 shadow-lg md:pt-11 md:pr-14 md:pb-8 md:shadow-none lg:mr-25 lg:ml-21 lg:pr-0 lg:pl-0">
           <h1 className="text-2xl font-bold text-blue-950 md:text-[2rem]">
             Personal info
           </h1>
@@ -53,7 +53,7 @@ function YourInfoComponent() {
           </form>
         </div>
       </div>
-      <div className="inline-flex w-full justify-end bg-white p-4 md:ml-2 md:bg-transparent md:pr-20">
+      <div className="inline-flex w-full justify-end bg-white p-4 md:pr-17.5 md:pl-10 lg:pr-25 lg:pl-21">
         <Button variant="primary" type="submit" className="ml-auto">
           Next Step
         </Button>
