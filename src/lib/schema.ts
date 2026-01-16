@@ -10,6 +10,10 @@ export const gamingPlanSchema = z.object({
   phone_number: z.string().refine((v) => validator.isMobilePhone(v, 'any'), {
     message: 'Enter a valid phone number',
   }),
+  show_yearly: z.boolean(),
+  plan: z.enum(['Arcade', 'Advanced', 'Pro']),
+  plan_monthly_price: z.number(),
+  plan_yearly_price: z.number(),
 })
 
 export type GamingPlanSchema = z.infer<typeof gamingPlanSchema>

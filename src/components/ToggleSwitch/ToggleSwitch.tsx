@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useFieldContext } from '@/hooks/form-context'
 
 interface SwitchProps {
   leftLabel: string
@@ -13,6 +14,8 @@ export function ToggleSwitch({
   rightLabel,
   ...props
 }: ToggleSwitchProps) {
+  const field = useFieldContext<boolean>()
+
   return (
     <div className="group flex min-h-12 min-w-73.75 items-center justify-center gap-6 rounded-lg bg-blue-50 has-disabled:pointer-events-none">
       <label
@@ -25,6 +28,9 @@ export function ToggleSwitch({
         <input
           type="checkbox"
           id="toggle-switch"
+          name={field.name}
+          onChange={(e) => field.handleChange(e.target.checked)}
+          checked={field.state.value}
           className="peer h-5 w-9.5 cursor-pointer appearance-none rounded-full bg-blue-950 transition-colors duration-300 checked:bg-blue-950"
           {...props}
         />

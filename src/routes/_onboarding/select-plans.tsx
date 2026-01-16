@@ -1,44 +1,77 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useStore } from '@tanstack/react-form-start'
+import type { z } from 'zod'
 import { Button } from '@/components/Button'
-import { RadioCard } from '@/components/RadioCard'
-import { ToggleSwitch } from '@/components/ToggleSwitch'
+import { useAppForm } from '@/hooks/form'
+import { gamingPlanSchema } from '@/lib/schema'
+import { useGamingPlanStore } from '@/store/store'
 
 import arcadeIcon from '@/assets/icon-arcade.svg'
 import advancedIcon from '@/assets/icon-advanced.svg'
 import proIcon from '@/assets/icon-pro.svg'
 
-const planOptions = [
-  {
-    name: 'plan',
-    label: 'Arcade',
-    icon: arcadeIcon,
-    price: 9,
-    yearlyPrice: 90,
-    showYearly: false,
-  },
-  {
-    name: 'plan',
-    label: 'Advanced',
-    icon: advancedIcon,
-    price: 12,
-    yearlyPrice: 120,
-    showYearly: false,
-  },
-  {
-    name: 'plan',
-    label: 'Pro',
-    icon: proIcon,
-    price: 15,
-    yearlyPrice: 150,
-    showYearly: false,
-  },
-]
-
 export const Route = createFileRoute('/_onboarding/select-plans')({
   component: SelectPlansComponent,
 })
 
+const selectPlanSchema = gamingPlanSchema.pick({
+  plan: true,
+  plan_monthly_price: true,
+  plan_yearly_price: true,
+  show_yearly: true,
+})
+
+type SelectPlanSchema = z.infer<typeof selectPlanSchema>
+
 function SelectPlansComponent() {
+  const navigate = Route.useNavigate()
+  const setData = useGamingPlanStore((state) => state.setData)
+
+  const plan = useGamingPlanStore((state) => state.plan)
+  const plan_monthly_price = useGamingPlanStore(
+    (state) => state.plan_monthly_price,
+  )
+  const plan_yearly_price = useGamingPlanStore(
+    (state) => state.plan_yearly_price,
+  )
+  const show_yearly = useGamingPlanStore((state) => state.show_yearly)
+
+  const form = useAppForm({
+    defaultValues: {
+      plan: plan,
+      plan_monthly_price: plan_monthly_price || 0,
+      plan_yearly_price: plan_yearly_price || 0,
+      show_yearly: show_yearly || false,
+    },
+    listeners: {
+      onChange: ({ formApi, fieldApi }) => {
+        switch (fieldApi.state.value) {
+          case 'Arcade': {
+            formApi.setFieldValue('plan_monthly_price', 9)
+            formApi.setFieldValue('plan_yearly_price', 90)
+            break
+          }
+          case 'Advanced': {
+            formApi.setFieldValue('plan_monthly_price', 12)
+            formApi.setFieldValue('plan_yearly_price', 120)
+            break
+          }
+          case 'Pro': {
+            formApi.setFieldValue('plan_monthly_price', 15)
+            formApi.setFieldValue('plan_yearly_price', 150)
+            break
+          }
+        }
+      },
+    },
+    onSubmit: ({ value }: { value: SelectPlanSchema }) => {
+      setData(value)
+      navigate({ to: '/addons' })
+    },
+  })
+
+  const showYearly = useStore(form.store, (state) => state.values.show_yearly)
+
   return (
     <>
       <div className="flex-1">
@@ -49,26 +82,79 @@ function SelectPlansComponent() {
           <p className="mt-2 text-base font-normal text-grey-500">
             You have the option of monthly or yearly billing.
           </p>
-          <form className="mt-6 md:mt-8 lg:mt-10" action="">
+          <form
+            className="mt-6 md:mt-8 lg:mt-10"
+            onSubmit={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              form.handleSubmit()
+            }}
+            id="select-plans"
+          >
             <fieldset className="flex flex-col gap-2 lg:flex-row lg:gap-4.5">
               <legend className="sr-only">Select your plan</legend>
-              {planOptions.map((plan, i) => (
-                <RadioCard key={i} {...plan} />
-              ))}
+              <form.AppField name="plan">
+                {(field) => (
+                  <field.RadioCard
+                    label="Arcade"
+                    icon={arcadeIcon}
+                    price={9}
+                    yearlyPrice={90}
+                    showYearly={showYearly}
+                  />
+                )}
+              </form.AppField>
+              <form.AppField name="plan">
+                {(field) => (
+                  <field.RadioCard
+                    label="Advanced"
+                    icon={advancedIcon}
+                    price={12}
+                    yearlyPrice={120}
+                    showYearly={showYearly}
+                  />
+                )}
+              </form.AppField>
+              <form.AppField name="plan">
+                {(field) => (
+                  <field.RadioCard
+                    label="Pro"
+                    icon={proIcon}
+                    price={15}
+                    yearlyPrice={150}
+                    showYearly={showYearly}
+                  />
+                )}
+              </form.AppField>
             </fieldset>
             <div className="mt-6 lg:mt-8">
-              <ToggleSwitch leftLabel="Monthly" rightLabel="Yearly" />
+              <form.AppField name="show_yearly">
+                {(field) => (
+                  <field.ToggleSwitch leftLabel="Monthly" rightLabel="Yearly" />
+                )}
+              </form.AppField>
             </div>
           </form>
         </div>
       </div>
       <div className="inline-flex w-full justify-end bg-white p-4 md:pr-17.5 md:pl-10 lg:pr-25 lg:pl-21">
-        <Button variant="additional" type="button" className="mr-auto">
+        <Button
+          variant="additional"
+          type="button"
+          className="mr-auto"
+          onClick={() => navigate({ to: '..' })}
+        >
           Go Back
         </Button>
-        <Button variant="primary" type="submit" className="ml-auto">
-          Next Step
-        </Button>
+        <form.AppForm>
+          <form.SubmitButton
+            form="select-plans"
+            variant="primary"
+            className="ml-auto"
+          >
+            Next Step
+          </form.SubmitButton>
+        </form.AppForm>
       </div>
     </>
   )

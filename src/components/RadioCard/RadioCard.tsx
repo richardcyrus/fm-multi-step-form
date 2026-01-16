@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useFieldContext } from '@/hooks/form-context'
 
 interface RadioProps {
   discountMessage?: string
@@ -21,12 +22,17 @@ export function RadioCard({
   yearlyPrice,
   ...props
 }: RadioCardProps) {
+  const field = useFieldContext<string>()
+
   return (
     <label className="flex min-h-20 cursor-pointer items-center rounded-lg border border-purple-200 bg-white p-4 hover:border-purple-600 has-checked:border-purple-600 has-checked:bg-blue-50 md:grid md:grid-cols-[40px_1fr] lg:flex lg:min-h-40 lg:min-w-34.5 lg:flex-col lg:items-start lg:p-4">
       <input
         type="radio"
         className="absolute h-0 w-0 cursor-pointer opacity-0"
-        value={label.toLowerCase()}
+        defaultValue={label}
+        name={field.name}
+        onChange={(e) => field.handleChange(e.target.value)}
+        checked={label === field.state.value}
         {...props}
       />
       <span>

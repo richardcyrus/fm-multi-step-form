@@ -41,6 +41,8 @@ Users should be able to:
 - [TailwindCSS](https://tailwindcss.com/)
 - [React](https://reactjs.org/) - JS library
 - [Tanstack Start](https://tanstack.com/start/latest) - React based framework
+- [Tanstack Form](https://zustand.docs.pmnd.rs/getting-started/introduction)
+- [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction)
 
 ### Useful resources
 
@@ -49,6 +51,7 @@ Users should be able to:
 - [Tailwind CSS Checkbox](https://www.material-tailwind.com/docs/html/checkbox)
 - [Tailwind CSS Toggle Switch](https://www.material-tailwind.com/docs/html/switch)
 - [How to Make a Div Stay at the Bottom of Page Content (Even with Scrollbars) Using CSS: A Complete Guide](https://www.codegenes.net/blog/make-div-stay-at-bottom-of-page-s-content-all-the-time-even-when-there-are-scrollbars/)
+- [5 Ways to Validate Phone Numbers in Zod](https://www.abstractapi.com/guides/api-functions/phone-number-validation-in-zod)
 
 ## Author
 
