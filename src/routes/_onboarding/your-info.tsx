@@ -3,6 +3,7 @@ import type { z } from 'zod'
 import { useAppForm } from '@/hooks/form'
 import { gamingPlanSchema } from '@/lib/schema'
 import { useGamingPlanStore } from '@/store/store'
+import { Route as plansRoute } from '@/routes/_onboarding/select-plans'
 
 export const Route = createFileRoute('/_onboarding/your-info')({
   component: YourInfoComponent,
@@ -35,7 +36,7 @@ function YourInfoComponent() {
     },
     onSubmit: ({ value }: { value: YourInfoSchema }) => {
       setData(value)
-      navigate({ to: '/select-plans' })
+      navigate({ to: plansRoute.to })
     },
   })
 

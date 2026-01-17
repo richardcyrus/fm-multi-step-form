@@ -5,6 +5,8 @@ import { Button } from '@/components/Button'
 import { useAppForm } from '@/hooks/form'
 import { gamingPlanSchema } from '@/lib/schema'
 import { useGamingPlanStore } from '@/store/store'
+import { Route as addonsRoute } from '@/routes/_onboarding/addons'
+import { Route as yourInfoRoute } from '@/routes/_onboarding/your-info'
 
 import arcadeIcon from '@/assets/icon-arcade.svg'
 import advancedIcon from '@/assets/icon-advanced.svg'
@@ -66,7 +68,7 @@ function SelectPlansComponent() {
     },
     onSubmit: ({ value }: { value: SelectPlanSchema }) => {
       setData(value)
-      navigate({ to: '/addons' })
+      navigate({ to: addonsRoute.to })
     },
   })
 
@@ -142,7 +144,7 @@ function SelectPlansComponent() {
           variant="additional"
           type="button"
           className="mr-auto"
-          onClick={() => navigate({ to: '..' })}
+          onClick={() => navigate({ to: yourInfoRoute.to })}
         >
           Go Back
         </Button>
