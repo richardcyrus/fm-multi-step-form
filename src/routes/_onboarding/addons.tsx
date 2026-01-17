@@ -26,8 +26,10 @@ function AddonsComponent() {
     listeners: {
       onSubmit: ({ formApi }) => {
         const addons_list = formApi.getFieldValue('addons')
+        const addons_chosen = []
+
         if (addons_list.includes('online_service')) {
-          formApi.pushFieldValue('chosen_addons', {
+          addons_chosen.push({
             id: 'online_service',
             label: 'Online Service',
             monthly_price: 1,
@@ -35,7 +37,7 @@ function AddonsComponent() {
           })
         }
         if (addons_list.includes('larger_storage')) {
-          formApi.pushFieldValue('chosen_addons', {
+          addons_chosen.push({
             id: 'larger_storage',
             label: 'Larger storage',
             monthly_price: 2,
@@ -43,13 +45,15 @@ function AddonsComponent() {
           })
         }
         if (addons_list.includes('custom_profile')) {
-          formApi.pushFieldValue('chosen_addons', {
+          addons_chosen.push({
             id: 'custom_profile',
             label: 'Customizable profile',
             monthly_price: 2,
             yearly_price: 20,
           })
         }
+
+        formApi.setFieldValue('chosen_addons', addons_chosen)
       },
     },
     onSubmit: ({ value }) => {
