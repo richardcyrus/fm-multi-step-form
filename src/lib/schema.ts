@@ -14,6 +14,15 @@ export const gamingPlanSchema = z.object({
   plan: z.enum(['Arcade', 'Advanced', 'Pro']),
   plan_monthly_price: z.number(),
   plan_yearly_price: z.number(),
+  addons: z.array(z.string()),
+  chosen_addons: z.array(
+    z.object({
+      id: z.string(),
+      label: z.string(),
+      monthly_price: z.number(),
+      yearly_price: z.number(),
+    }),
+  ),
 })
 
 export type GamingPlanSchema = z.infer<typeof gamingPlanSchema>

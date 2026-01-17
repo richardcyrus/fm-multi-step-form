@@ -52,6 +52,8 @@ Users should be able to:
 - [Tailwind CSS Toggle Switch](https://www.material-tailwind.com/docs/html/switch)
 - [How to Make a Div Stay at the Bottom of Page Content (Even with Scrollbars) Using CSS: A Complete Guide](https://www.codegenes.net/blog/make-div-stay-at-bottom-of-page-s-content-all-the-time-even-when-there-are-scrollbars/)
 - [5 Ways to Validate Phone Numbers in Zod](https://www.abstractapi.com/guides/api-functions/phone-number-validation-in-zod)
+- [Usage with Checkboxes](https://github.com/TanStack/form/issues/363)
+- [Forms in React](https://tutorial.techaltum.com/react-forms.html)
 
 ## Author
 

@@ -1,28 +1,61 @@
 import * as React from 'react'
+import { useFieldContext } from '@/hooks/form-context'
 
 interface CheckboxProps {
+  isArray: boolean
   label: string
-  subLabel: string
   price: number
   showYearly: boolean
+  subLabel: string
+  value: string
   yearlyPrice: number
 }
 
+const findValueInArray = (array: Array<string> = [], value: string) => {
+  return array.indexOf(value)
+}
+
 export interface CheckboxCardProps
-  extends CheckboxProps, React.ComponentProps<'input'> {}
+  extends Omit<React.ComponentProps<'input'>, 'value'>, CheckboxProps {}
 
 export function CheckboxCard({
+  isArray,
   label,
-  subLabel,
   price,
   showYearly,
+  subLabel,
+  value,
   yearlyPrice,
   ...props
 }: CheckboxCardProps) {
+  if (isArray && !value)
+    throw new Error('Checkboxes that are used as an array must have a value.')
+
+  const field = useFieldContext<Array<string>>()
+
+  let currentValue = field.state.value
+  if (typeof currentValue === 'undefined') {
+    currentValue = []
+    field.setValue(currentValue)
+  }
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      field.pushValue(value)
+    } else {
+      const idx = findValueInArray(field.state.value, value)
+      if (idx > -1) field.removeValue(idx)
+    }
+  }
+
   return (
     <label className="grid min-h-15.5 cursor-pointer grid-cols-[1.25rem_2fr_1fr] items-center rounded-lg border border-purple-200 bg-white px-4 py-[.71875rem] hover:border-purple-600 has-checked:border-purple-600 has-checked:bg-blue-50 md:min-h-20.25 md:px-6 md:py-4">
       <span className="relative inline-grid">
         <input
+          name={field.name}
+          onChange={onChange}
+          value={value}
+          checked={findValueInArray(field.state.value, value) > -1}
           type="checkbox"
           className="peer h-5 w-5 cursor-pointer appearance-none rounded border border-purple-200 transition-all checked:bg-purple-600"
           {...props}
