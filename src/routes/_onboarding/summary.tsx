@@ -21,8 +21,17 @@ function SummaryComponent() {
   )
   const show_yearly = useGamingPlanStore((state) => state.show_yearly)
   const chosen_addons = useGamingPlanStore((state) => state.chosen_addons)
-  const monthly_total = useGamingPlanStore((state) => state.getMonthlyTotal)()
-  const yearly_total = useGamingPlanStore((state) => state.getYearlyTotal)()
+  const monthly_total = useGamingPlanStore(
+    (state) =>
+      state.plan_monthly_price +
+      state.chosen_addons.reduce((sum, addon) => sum + addon.monthly_price, 0),
+  )
+  const yearly_total = useGamingPlanStore(
+    (state) =>
+      state.plan_yearly_price +
+      state.chosen_addons.reduce((sum, addon) => sum + addon.yearly_price, 0),
+  )
+
   const { reset } = useGamingPlanStore()
 
   const confirmPlan = () => {
