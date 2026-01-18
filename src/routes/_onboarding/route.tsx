@@ -8,7 +8,7 @@ function RouteComponent() {
   return (
     <>
       <div className="min-h-lvh bg-[url(/bg-sidebar-mobile.svg)] bg-contain bg-no-repeat md:grid md:place-content-center md:bg-none">
-        <div className="flex min-h-lvh flex-col md:grid md:min-h-auto md:min-w-171.5 md:grid-cols-[238px_minmax(0,1fr)] md:grid-rows-[minmax(0,1fr)_80px] md:rounded-[15px] md:bg-white md:shadow-lg lg:min-w-235 lg:grid-cols-[306px_minmax(0,1fr)]">
+        <div className="flex min-h-lvh flex-col md:grid md:min-h-auto md:w-171.5 md:grid-cols-[238px_minmax(0,1fr)] md:grid-rows-[minmax(0,1fr)_80px] md:rounded-[15px] md:bg-white md:shadow-lg lg:w-235 lg:grid-cols-[306px_minmax(0,1fr)]">
           <aside className="py-8 md:row-span-full md:p-4">
             <div className="flex justify-center md:min-h-142 md:justify-start md:rounded-[15px] md:bg-[url(/bg-sidebar-desktop.svg)] md:bg-size-[274px_568px] md:bg-no-repeat md:px-7 md:pt-10 lg:bg-auto lg:bg-center">
               <ul>
