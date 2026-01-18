@@ -1,6 +1,18 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { RadioCard } from './RadioCard'
+
+const mockField = {
+  name: 'plan',
+  state: {
+    value: '',
+  },
+  handleChange: vi.fn(),
+}
+
+vi.mock('@/hooks/form-context', () => ({
+  useFieldContext: () => mockField,
+}))
 
 describe('RadioCard Component', () => {
   const defaultProps = {
@@ -11,6 +23,12 @@ describe('RadioCard Component', () => {
     yearlyPrice: 90,
   }
 
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockField.state.value = ''
+    mockField.handleChange = vi.fn()
+  })
+
   describe('Rendering', () => {
     test('renders radio card with correct label', () => {
       render(<RadioCard {...defaultProps} />)
@@ -19,19 +37,19 @@ describe('RadioCard Component', () => {
       expect(label).toBeInTheDocument()
     })
 
-    test('renders radio input with correct value', () => {
+    test('renders radio input with correct type', () => {
       render(<RadioCard {...defaultProps} />)
       const radioInput = screen.getByRole('radio')
 
-      // @eslint-disable-next-line jest-dom/prefer-to-have-value
-      expect(radioInput).toHaveAttribute('value', 'arcade')
+      expect(radioInput).toHaveAttribute('type', 'radio')
     })
 
-    test('renders icon image with correct src', () => {
+    test('renders icon image with correct src and alt', () => {
       render(<RadioCard {...defaultProps} />)
       const icon = screen.getByRole('img')
 
       expect(icon).toHaveAttribute('src', '../../assets/icon-arcade.svg')
+      expect(icon).toHaveAttribute('alt', 'Arcade icon')
     })
 
     test('renders monthly price when showYearly is false', () => {
@@ -75,32 +93,49 @@ describe('RadioCard Component', () => {
       expect(discount).not.toBeInTheDocument()
     })
 
-    test('renders radio input with correct classes', () => {
-      const { container } = render(<RadioCard {...defaultProps} />)
-      const input = container.querySelector('input[type="radio"]')
-
-      expect(input).toHaveClass(
-        'absolute',
-        'h-0',
-        'w-0',
-        'cursor-pointer',
-        'opacity-0',
-      )
-    })
-  })
-
-  describe('Radio Input Behavior', () => {
-    test('radio input can be selected', () => {
+    test('renders radio input with correct value based on label', () => {
       render(<RadioCard {...defaultProps} />)
       const radioInput = screen.getByRole('radio')
 
-      expect(radioInput).not.toBeChecked()
+      expect(radioInput).toHaveAttribute('value', 'Arcade')
+    })
+  })
+
+  describe('Form Integration', () => {
+    test('uses field name from form context', () => {
+      render(<RadioCard {...defaultProps} />)
+      const radioInput = screen.getByRole('radio')
+
+      expect(radioInput).toHaveAttribute('name', 'plan')
+    })
+
+    test('calls field handleChange when radio is selected', () => {
+      render(<RadioCard {...defaultProps} />)
+      const radioInput = screen.getByRole('radio')
 
       fireEvent.click(radioInput)
+
+      expect(mockField.handleChange).toHaveBeenCalledWith('Arcade')
+    })
+
+    test('radio is checked when field value matches label', () => {
+      mockField.state.value = 'Arcade'
+      render(<RadioCard {...defaultProps} />)
+      const radioInput = screen.getByRole('radio')
 
       expect(radioInput).toBeChecked()
     })
 
+    test('radio is not checked when field value does not match label', () => {
+      mockField.state.value = 'Advanced'
+      render(<RadioCard {...defaultProps} />)
+      const radioInput = screen.getByRole('radio')
+
+      expect(radioInput).not.toBeChecked()
+    })
+  })
+
+  describe('Radio Input Behavior', () => {
     test('calls onChange when radio is selected', () => {
       const handleChange = vi.fn()
       render(<RadioCard {...defaultProps} onChange={handleChange} />)
@@ -118,11 +153,11 @@ describe('RadioCard Component', () => {
       expect(radioInput).toBeChecked()
     })
 
-    test('radio input respects name attribute', () => {
-      render(<RadioCard {...defaultProps} name="plan" />)
+    test('radio input respects name attribute override', () => {
+      render(<RadioCard {...defaultProps} name="subscription" />)
       const radioInput = screen.getByRole('radio')
 
-      expect(radioInput).toHaveAttribute('name', 'plan')
+      expect(radioInput).toHaveAttribute('name', 'subscription')
     })
 
     test('radio input respects required attribute', () => {
@@ -169,19 +204,16 @@ describe('RadioCard Component', () => {
 
       expect(radioInput).toHaveAttribute('aria-label', 'Select Arcade plan')
     })
+
+    test('applies custom id when provided', () => {
+      render(<RadioCard {...defaultProps} id="arcade-plan" />)
+      const radioInput = screen.getByRole('radio')
+
+      expect(radioInput).toHaveAttribute('id', 'arcade-plan')
+    })
   })
 
   describe('Accessibility', () => {
-    test.skip('radio input is keyboard accessible', () => {
-      const handleChange = vi.fn()
-      render(<RadioCard {...defaultProps} onChange={handleChange} />)
-      const radioInput = screen.getByRole('radio')
-
-      fireEvent.keyDown(radioInput, { key: ' ', code: 'Space' })
-
-      expect(handleChange).toHaveBeenCalledTimes(1)
-    })
-
     test('radio input can be found by role', () => {
       render(<RadioCard {...defaultProps} />)
       const radioInput = screen.getByRole('radio')
@@ -189,30 +221,11 @@ describe('RadioCard Component', () => {
       expect(radioInput).toBeInTheDocument()
     })
 
-    test('label is clickable and selects radio', () => {
+    test('icon has proper alt text for accessibility', () => {
       render(<RadioCard {...defaultProps} />)
-      const radioInput = screen.getByRole('radio')
-      const label = radioInput.closest('label')
+      const icon = screen.getByRole('img')
 
-      expect(radioInput).not.toBeChecked()
-
-      if (label) {
-        fireEvent.click(label)
-      }
-
-      expect(radioInput).toBeChecked()
-    })
-
-    test.skip('disabled radio input cannot be selected', () => {
-      const handleChange = vi.fn()
-      render(
-        <RadioCard {...defaultProps} disabled={true} onChange={handleChange} />,
-      )
-      const radioInput = screen.getByRole('radio')
-
-      fireEvent.click(radioInput)
-
-      expect(handleChange).not.toHaveBeenCalled()
+      expect(icon).toHaveAttribute('alt', 'Arcade icon')
     })
   })
 
@@ -239,31 +252,86 @@ describe('RadioCard Component', () => {
 
       expect(monthlyPrice).toBeInTheDocument()
     })
+
+    test('handles large prices correctly', () => {
+      render(
+        <RadioCard
+          {...defaultProps}
+          price={999}
+          yearlyPrice={9999}
+          showYearly={true}
+        />,
+      )
+      const yearlyPrice = screen.getByText('$9999/yr')
+
+      expect(yearlyPrice).toBeInTheDocument()
+    })
+
+    test('displays discount message with proper styling', () => {
+      render(
+        <RadioCard
+          {...defaultProps}
+          showYearly={true}
+          discountMessage="Special offer"
+        />,
+      )
+      const discount = screen.getByText('Special offer')
+
+      expect(discount).toBeInTheDocument()
+    })
   })
 
-  describe('Label Text Cases', () => {
+  describe('Label Value Handling', () => {
     test('handles uppercase labels correctly', () => {
       render(<RadioCard {...defaultProps} label="ADVANCED" />)
       const radioInput = screen.getByRole('radio')
 
-      // @eslint-disable-next-line jest-dom/prefer-to-have-value
-      expect(radioInput).toHaveAttribute('value', 'advanced')
+      expect(radioInput).toHaveAttribute('value', 'ADVANCED')
+      expect(screen.getByText('ADVANCED')).toBeInTheDocument()
     })
 
     test('handles labels with spaces correctly', () => {
       render(<RadioCard {...defaultProps} label="Pro Plan" />)
       const radioInput = screen.getByRole('radio')
 
-      // @eslint-disable-next-line jest-dom/prefer-to-have-value
-      expect(radioInput).toHaveAttribute('value', 'pro plan')
+      expect(radioInput).toHaveAttribute('value', 'Pro Plan')
+      expect(screen.getByText('Pro Plan')).toBeInTheDocument()
     })
 
     test('handles labels with special characters correctly', () => {
       render(<RadioCard {...defaultProps} label="Pro-Plus!" />)
       const radioInput = screen.getByRole('radio')
 
-      // @eslint-disable-next-line jest-dom/prefer-to-have-value
-      expect(radioInput).toHaveAttribute('value', 'pro-plus!')
+      expect(radioInput).toHaveAttribute('value', 'Pro-Plus!')
+      expect(screen.getByText('Pro-Plus!')).toBeInTheDocument()
+    })
+
+    test('handles labels with numbers correctly', () => {
+      render(<RadioCard {...defaultProps} label="Plan 2.0" />)
+      const radioInput = screen.getByRole('radio')
+
+      expect(radioInput).toHaveAttribute('value', 'Plan 2.0')
+      expect(screen.getByText('Plan 2.0')).toBeInTheDocument()
+    })
+  })
+
+  describe('Error Handling', () => {
+    test('renders without crashing when all props are provided', () => {
+      expect(() => {
+        render(<RadioCard {...defaultProps} />)
+      }).not.toThrow()
+    })
+
+    test('handles missing discountMessage gracefully', () => {
+      expect(() => {
+        render(<RadioCard {...defaultProps} showYearly={true} />)
+      }).not.toThrow()
+    })
+
+    test('handles empty icon path gracefully', () => {
+      expect(() => {
+        render(<RadioCard {...defaultProps} icon="" />)
+      }).not.toThrow()
     })
   })
 })

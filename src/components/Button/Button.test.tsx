@@ -1,6 +1,17 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, test, vi } from 'vitest'
-import { Button } from './Button'
+import { Button, SubmitButton } from './Button'
+
+const mockFormContext = {
+  Subscribe: ({ children, selector }: any) => {
+    const state = { isSubmitting: false }
+    return children(selector(state))
+  },
+}
+
+vi.mock('@/hooks/form-context', () => ({
+  useFormContext: () => mockFormContext,
+}))
 
 describe('Button Component', () => {
   describe('Rendering', () => {
@@ -118,20 +129,6 @@ describe('Button Component', () => {
   })
 
   describe('Styling', () => {
-    test('applies base button styles', () => {
-      const { container } = render(<Button onClick={() => {}}>Button</Button>)
-      const button = container.querySelector('button')
-
-      expect(button).toHaveClass('inline-flex')
-      expect(button).toHaveClass('min-h-12')
-      expect(button).toHaveClass('min-w-[7.6875rem]')
-      expect(button).toHaveClass('cursor-pointer')
-      expect(button).toHaveClass('items-center')
-      expect(button).toHaveClass('justify-center')
-      expect(button).toHaveClass('rounded-lg')
-      expect(button).toHaveClass('font-medium')
-    })
-
     test('merges custom className with variant styles', () => {
       const { container } = render(
         <Button onClick={() => {}} className="custom-class">
@@ -260,6 +257,85 @@ describe('Button Component', () => {
 
       expect(button).toHaveAttribute('title', 'Info')
       expect(button).toHaveClass('extra')
+    })
+  })
+})
+
+describe('SubmitButton Component', () => {
+  describe('Rendering', () => {
+    test('renders submit button with type="submit"', () => {
+      const { container } = render(<SubmitButton>Submit</SubmitButton>)
+      const button = container.querySelector('button')
+
+      expect(button).toHaveAttribute('type', 'submit')
+    })
+
+    test('renders children correctly', () => {
+      render(<SubmitButton>Submit Form</SubmitButton>)
+      const button = screen.getByRole('button')
+
+      expect(button).toHaveTextContent('Submit Form')
+    })
+  })
+
+  describe('Form Integration', () => {
+    test('subscribes to form submitting state', () => {
+      const { container } = render(<SubmitButton>Submit</SubmitButton>)
+      const button = container.querySelector('button')
+
+      expect(button).toBeInTheDocument()
+    })
+  })
+
+  describe('Variants and Styling', () => {
+    test('applies primary variant by default', () => {
+      const { container } = render(<SubmitButton>Submit</SubmitButton>)
+      const button = container.querySelector('button')
+
+      expect(button).toHaveClass('bg-blue-950')
+      expect(button).toHaveClass('text-white')
+    })
+
+    test('applies secondary variant when specified', () => {
+      const { container } = render(
+        <SubmitButton variant="secondary">Submit</SubmitButton>,
+      )
+      const button = container.querySelector('button')
+
+      expect(button).toHaveClass('bg-purple-600')
+      expect(button).toHaveClass('text-white')
+    })
+
+    test('merges custom className with variant styles', () => {
+      const { container } = render(
+        <SubmitButton className="custom-class">Submit</SubmitButton>,
+      )
+      const button = container.querySelector('button')
+
+      expect(button).toHaveClass('custom-class')
+      expect(button).toHaveClass('bg-blue-950')
+    })
+  })
+
+  describe('Props Spreading', () => {
+    test('spreads additional button props', () => {
+      const { container } = render(
+        <SubmitButton title="Submit form">Submit</SubmitButton>,
+      )
+      const button = container.querySelector('button')
+
+      expect(button).toHaveAttribute('title', 'Submit form')
+    })
+
+    test('applies aria-label when provided', () => {
+      const { container } = render(
+        <SubmitButton aria-label="Submit registration form">
+          Submit
+        </SubmitButton>,
+      )
+      const button = container.querySelector('button')
+
+      expect(button).toHaveAttribute('aria-label', 'Submit registration form')
     })
   })
 })

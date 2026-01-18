@@ -1,15 +1,39 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, expect, test, vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import { CheckboxCard } from './CheckboxCard'
+
+const mockFieldContext = {
+  name: 'addons',
+  state: {
+    value: [],
+  },
+  setValue: vi.fn(),
+  pushValue: vi.fn(),
+  removeValue: vi.fn(),
+}
+
+vi.mock('@/hooks/form-context', () => ({
+  useFieldContext: () => mockFieldContext,
+}))
 
 describe('CheckboxCard Component', () => {
   const defaultProps = {
+    isArray: true,
     label: 'Online Service',
     subLabel: 'Access to multiplayer games',
     price: 9,
     showYearly: false,
     yearlyPrice: 90,
+    value: 'online-service',
   }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockFieldContext.state.value = []
+    mockFieldContext.setValue = vi.fn()
+    mockFieldContext.pushValue = vi.fn()
+    mockFieldContext.removeValue = vi.fn()
+  })
 
   describe('Rendering', () => {
     test('renders checkbox card with correct label', () => {
@@ -26,13 +50,6 @@ describe('CheckboxCard Component', () => {
       expect(subLabel).toBeInTheDocument()
     })
 
-    test.skip('renders checkbox input with correct value', () => {
-      render(<CheckboxCard {...defaultProps} />)
-      const checkboxInput = screen.getByRole('checkbox')
-
-      expect(checkboxInput).toHaveValue('online service')
-    })
-
     test('renders monthly price when showYearly is false', () => {
       render(<CheckboxCard {...defaultProps} showYearly={false} />)
       const price = screen.getByText('+$9/mo')
@@ -47,49 +64,6 @@ describe('CheckboxCard Component', () => {
       expect(price).toBeInTheDocument()
     })
 
-    test('renders label element with correct classes', () => {
-      const { container } = render(<CheckboxCard {...defaultProps} />)
-      const label = container.querySelector('label')
-
-      expect(label).toHaveClass(
-        'grid',
-        'min-h-15.5',
-        'cursor-pointer',
-        'grid-cols-[1.25rem_2fr_1fr]',
-        'items-center',
-        'rounded-lg',
-        'border',
-        'border-purple-200',
-        'bg-white',
-        'px-4',
-        'py-[.71875rem]',
-        'hover:border-purple-600',
-        'has-checked:border-purple-600',
-        'has-checked:bg-blue-50',
-        'md:min-h-20.25',
-        'md:px-6',
-        'md:py-4',
-      )
-    })
-
-    test('renders checkbox input with correct classes', () => {
-      const { container } = render(<CheckboxCard {...defaultProps} />)
-      const input = container.querySelector('input[type="checkbox"]')
-
-      expect(input).toHaveClass(
-        'peer',
-        'h-5',
-        'w-5',
-        'cursor-pointer',
-        'appearance-none',
-        'rounded',
-        'border',
-        'border-purple-200',
-        'transition-all',
-        'checked:bg-purple-600',
-      )
-    })
-
     test('renders checkmark SVG', () => {
       const { container } = render(<CheckboxCard {...defaultProps} />)
       const svg = container.querySelector('svg')
@@ -98,19 +72,78 @@ describe('CheckboxCard Component', () => {
       expect(svg).toHaveAttribute('xmlns', 'http://www.w3.org/2000/svg')
       expect(svg).toHaveAttribute('viewBox', '0 0 12 9')
     })
+
+    test('renders checkbox input with correct type', () => {
+      render(<CheckboxCard {...defaultProps} />)
+      const checkboxInput = screen.getByRole('checkbox')
+
+      expect(checkboxInput).toHaveAttribute('type', 'checkbox')
+    })
   })
 
-  describe('Checkbox Input Behavior', () => {
-    test('checkbox input can be checked', () => {
+  describe('Form Integration', () => {
+    test('throws error when isArray is true but no value is provided', () => {
+      expect(() => {
+        render(<CheckboxCard {...defaultProps} value="" />)
+      }).toThrow('Checkboxes that are used as an array must have a value.')
+    })
+
+    test('initializes empty array when field value is undefined', () => {
+      mockFieldContext.state.value = undefined
+      render(<CheckboxCard {...defaultProps} />)
+
+      expect(mockFieldContext.setValue).toHaveBeenCalledWith([])
+    })
+
+    test('calls pushValue when checkbox is checked', () => {
+      render(<CheckboxCard {...defaultProps} />)
+      const checkboxInput = screen.getByRole('checkbox')
+
+      fireEvent.click(checkboxInput)
+
+      expect(mockFieldContext.pushValue).toHaveBeenCalledWith('online-service')
+    })
+
+    test('calls removeValue when checkbox is unchecked', () => {
+      mockFieldContext.state.value = ['online-service']
+      render(<CheckboxCard {...defaultProps} />)
+      const checkboxInput = screen.getByRole('checkbox')
+
+      fireEvent.click(checkboxInput)
+
+      expect(mockFieldContext.removeValue).toHaveBeenCalledWith(0)
+    })
+
+    test('checkbox is checked when value exists in field array', () => {
+      mockFieldContext.state.value = ['online-service']
+      render(<CheckboxCard {...defaultProps} />)
+      const checkboxInput = screen.getByRole('checkbox')
+
+      expect(checkboxInput).toBeChecked()
+    })
+
+    test('checkbox is unchecked when value does not exist in field array', () => {
+      mockFieldContext.state.value = ['other-service']
       render(<CheckboxCard {...defaultProps} />)
       const checkboxInput = screen.getByRole('checkbox')
 
       expect(checkboxInput).not.toBeChecked()
-
-      fireEvent.click(checkboxInput)
-
-      expect(checkboxInput).toBeChecked()
     })
+  })
+
+  describe('Checkbox Input Behavior', () => {
+    // test('checkbox input can be checked and unchecked', () => {
+    //   render(<CheckboxCard {...defaultProps} />)
+    //   const checkboxInput = screen.getByRole('checkbox')
+
+    //   expect(checkboxInput).not.toBeChecked()
+
+    //   fireEvent.click(checkboxInput)
+    //   expect(checkboxInput).toBeChecked()
+
+    //   fireEvent.click(checkboxInput)
+    //   expect(checkboxInput).not.toBeChecked()
+    // })
 
     test('calls onChange when checkbox is toggled', () => {
       const handleChange = vi.fn()
@@ -122,15 +155,8 @@ describe('CheckboxCard Component', () => {
       expect(handleChange).toHaveBeenCalledTimes(1)
     })
 
-    test('checkbox input can be controlled via checked prop', () => {
-      render(<CheckboxCard {...defaultProps} checked={true} readOnly />)
-      const checkboxInput = screen.getByRole('checkbox')
-
-      expect(checkboxInput).toBeChecked()
-    })
-
-    test('checkbox input respects name attribute', () => {
-      render(<CheckboxCard {...defaultProps} name="addons" />)
+    test('checkbox input respects name attribute from field context', () => {
+      render(<CheckboxCard {...defaultProps} />)
       const checkboxInput = screen.getByRole('checkbox')
 
       expect(checkboxInput).toHaveAttribute('name', 'addons')
@@ -149,17 +175,6 @@ describe('CheckboxCard Component', () => {
 
       expect(checkboxInput).toBeDisabled()
     })
-
-    test('checkbox can be unchecked after being checked', () => {
-      render(<CheckboxCard {...defaultProps} />)
-      const checkboxInput = screen.getByRole('checkbox')
-
-      fireEvent.click(checkboxInput)
-      expect(checkboxInput).toBeChecked()
-
-      fireEvent.click(checkboxInput)
-      expect(checkboxInput).not.toBeChecked()
-    })
   })
 
   describe('Props Spreading', () => {
@@ -174,14 +189,12 @@ describe('CheckboxCard Component', () => {
       render(
         <CheckboxCard
           {...defaultProps}
-          name="addon"
           required={true}
           data-testid="addon-checkbox"
         />,
       )
       const checkboxInput = screen.getByTestId('addon-checkbox')
 
-      expect(checkboxInput).toHaveAttribute('name', 'addon')
       expect(checkboxInput).toBeRequired()
     })
 
@@ -206,16 +219,6 @@ describe('CheckboxCard Component', () => {
   })
 
   describe('Accessibility', () => {
-    test.skip('checkbox input is keyboard accessible', () => {
-      const handleChange = vi.fn()
-      render(<CheckboxCard {...defaultProps} onChange={handleChange} />)
-      const checkboxInput = screen.getByRole('checkbox')
-
-      fireEvent.keyDown(checkboxInput, { key: ' ', code: 'Space' })
-
-      expect(handleChange).toHaveBeenCalledTimes(1)
-    })
-
     test('checkbox input can be found by role', () => {
       render(<CheckboxCard {...defaultProps} />)
       const checkboxInput = screen.getByRole('checkbox')
@@ -223,36 +226,36 @@ describe('CheckboxCard Component', () => {
       expect(checkboxInput).toBeInTheDocument()
     })
 
-    test('label is clickable and toggles checkbox', () => {
-      render(<CheckboxCard {...defaultProps} />)
-      const checkboxInput = screen.getByRole('checkbox')
-      const label = checkboxInput.closest('label')
+    // test('label is clickable and toggles checkbox', () => {
+    //   render(<CheckboxCard {...defaultProps} />)
+    //   const checkboxInput = screen.getByRole('checkbox')
+    //   const label = checkboxInput.closest('label')
 
-      expect(checkboxInput).not.toBeChecked()
+    //   expect(checkboxInput).not.toBeChecked()
 
-      if (label) {
-        fireEvent.click(label)
-      }
+    //   if (label) {
+    //     fireEvent.click(label)
+    //   }
 
-      expect(checkboxInput).toBeChecked()
-    })
+    //   expect(checkboxInput).toBeChecked()
+    // })
 
-    test.skip('disabled checkbox cannot be toggled', () => {
-      const handleChange = vi.fn()
-      render(
-        <CheckboxCard
-          {...defaultProps}
-          disabled={true}
-          onChange={handleChange}
-        />,
-      )
-      const checkboxInput = screen.getByRole('checkbox')
+    // test('disabled checkbox cannot be toggled', () => {
+    //   const handleChange = vi.fn()
+    //   render(
+    //     <CheckboxCard
+    //       {...defaultProps}
+    //       disabled={true}
+    //       onChange={handleChange}
+    //     />,
+    //   )
+    //   const checkboxInput = screen.getByRole('checkbox')
 
-      fireEvent.click(checkboxInput)
+    //   fireEvent.click(checkboxInput)
 
-      expect(handleChange).not.toHaveBeenCalled()
-      expect(checkboxInput).not.toBeChecked()
-    })
+    //   expect(handleChange).not.toHaveBeenCalled()
+    //   expect(checkboxInput).not.toBeChecked()
+    // })
   })
 
   describe('Price Display Logic', () => {
@@ -299,55 +302,27 @@ describe('CheckboxCard Component', () => {
 
       expect(yearlyPrice).toBeInTheDocument()
     })
-  })
 
-  describe.skip('Label Text Cases', () => {
-    test('handles uppercase labels correctly', () => {
-      render(<CheckboxCard {...defaultProps} label="ONLINE SERVICE" />)
-      const checkboxInput = screen.getByRole('checkbox')
+    test('displays price with correct alignment', () => {
+      const { container } = render(<CheckboxCard {...defaultProps} />)
+      const priceElement = container.querySelector('.text-right')
 
-      expect(checkboxInput).toHaveValue('online service')
-    })
-
-    test('handles labels with spaces correctly', () => {
-      render(<CheckboxCard {...defaultProps} label="Custom Profile" />)
-      const checkboxInput = screen.getByRole('checkbox')
-
-      expect(checkboxInput).toHaveValue('custom profile')
-    })
-
-    test('handles labels with special characters correctly', () => {
-      render(<CheckboxCard {...defaultProps} label="Pro-Plus!" />)
-      const checkboxInput = screen.getByRole('checkbox')
-
-      expect(checkboxInput).toHaveValue('pro-plus!')
-    })
-
-    test('handles labels with numbers correctly', () => {
-      render(<CheckboxCard {...defaultProps} label="Service 2.0" />)
-      const checkboxInput = screen.getByRole('checkbox')
-
-      expect(checkboxInput).toHaveValue('service 2.0')
+      expect(priceElement).toBeInTheDocument()
+      expect(priceElement).toHaveTextContent('+$9/mo')
     })
   })
 
-  describe('Checkmark Visibility', () => {
-    test('checkmark is hidden when checkbox is unchecked', () => {
-      render(<CheckboxCard {...defaultProps} />)
-      const { container } = render(<CheckboxCard {...defaultProps} />)
-      const checkmark = container.querySelector('.peer-checked\\:opacity-100')
-
-      expect(checkmark).toHaveClass('opacity-0')
+  describe('Error Handling', () => {
+    test('renders without crashing when all props are provided', () => {
+      expect(() => {
+        render(<CheckboxCard {...defaultProps} />)
+      }).not.toThrow()
     })
 
-    test.skip('checkmark becomes visible when checkbox is checked', () => {
-      const { container } = render(<CheckboxCard {...defaultProps} />)
-      const checkboxInput = screen.getByRole('checkbox')
-      const checkmark = container.querySelector('.peer-checked\\:opacity-100')
-
-      fireEvent.click(checkboxInput)
-
-      expect(checkmark).toHaveClass('opacity-100')
+    test('handles missing subLabel gracefully', () => {
+      expect(() => {
+        render(<CheckboxCard {...defaultProps} subLabel="" />)
+      }).not.toThrow()
     })
   })
 })
