@@ -2,6 +2,18 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import type { GamingPlanSchema } from '@/lib/schema'
 
+const initialState: GamingPlanSchema = {
+  full_name: '',
+  email_address: '',
+  phone_number: '',
+  show_yearly: false,
+  plan: '',
+  plan_monthly_price: 0,
+  plan_yearly_price: 0,
+  addons: [],
+  chosen_addons: [],
+}
+
 type GamingPlanState = GamingPlanSchema & {
   reset: () => void
   setData: (data: Partial<GamingPlanSchema>) => void
@@ -11,28 +23,9 @@ type GamingPlanState = GamingPlanSchema & {
 
 export const useGamingPlanStore = create<GamingPlanState>()(
   persist(
-    (set, get) => ({
-      full_name: '',
-      email_address: '',
-      phone_number: '',
-      show_yearly: false,
-      plan: '',
-      plan_monthly_price: 0,
-      plan_yearly_price: 0,
-      addons: [],
-      chosen_addons: [],
-      reset: () =>
-        set({
-          full_name: '',
-          email_address: '',
-          phone_number: '',
-          show_yearly: false,
-          plan: '',
-          plan_monthly_price: 0,
-          plan_yearly_price: 0,
-          addons: [],
-          chosen_addons: [],
-        }),
+    (set) => ({
+      ...initialState,
+      reset: () => set(initialState),
       setData: (data) => set(data),
       getMonthlyTotal: () => {
         const price = get().plan_monthly_price

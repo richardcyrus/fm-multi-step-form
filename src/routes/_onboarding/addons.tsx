@@ -1,5 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
+import type { z } from 'zod'
 import { Button } from '@/components/Button'
+import { gamingPlanSchema } from '@/lib/schema'
 import { useGamingPlanStore } from '@/store/store'
 import { useAppForm } from '@/hooks/form'
 import { Route as summaryRoute } from '@/routes/_onboarding/summary'
@@ -8,6 +10,14 @@ import { Route as plansRoute } from '@/routes/_onboarding/select-plans'
 export const Route = createFileRoute('/_onboarding/addons')({
   component: AddonsComponent,
 })
+
+const addonsSchema = gamingPlanSchema.pick({
+  addons: true,
+  chosen_addons: true,
+  show_yearly: true,
+})
+
+type AddonsSchema = z.infer<typeof addonsSchema>
 
 function AddonsComponent() {
   const navigate = Route.useNavigate()
@@ -22,6 +32,9 @@ function AddonsComponent() {
       show_yearly: show_yearly,
       addons: addons,
       chosen_addons: chosen_addons,
+    },
+    validators: {
+      onChange: addonsSchema,
     },
     listeners: {
       onSubmit: ({ formApi }) => {
@@ -56,7 +69,7 @@ function AddonsComponent() {
         formApi.setFieldValue('chosen_addons', addons_chosen)
       },
     },
-    onSubmit: ({ value }) => {
+    onSubmit: ({ value }: { value: AddonsSchema }) => {
       setData(value)
       navigate({ to: summaryRoute.to })
     },

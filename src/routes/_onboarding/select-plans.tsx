@@ -45,6 +45,9 @@ function SelectPlansComponent() {
       plan_yearly_price: plan_yearly_price,
       show_yearly: show_yearly,
     },
+    validators: {
+      onChange: selectPlanSchema,
+    },
     listeners: {
       onChange: ({ formApi, fieldApi }) => {
         switch (fieldApi.state.value) {
