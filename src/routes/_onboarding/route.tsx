@@ -1,10 +1,20 @@
-import { Link, Outlet, createFileRoute } from '@tanstack/react-router'
+import { Link, Outlet, createFileRoute, useMatch } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_onboarding')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+  const isSummaryActive = useMatch({
+    from: '/_onboarding/summary',
+    shouldThrow: false,
+  })
+  const isThankYouActive = useMatch({
+    from: '/_onboarding/thank-you',
+    shouldThrow: false,
+  })
+  const showSummaryActive = isSummaryActive || isThankYouActive
+
   return (
     <>
       <div className="min-h-lvh bg-[url(/bg-sidebar-mobile.svg)] bg-contain bg-no-repeat md:grid md:place-content-center md:bg-none">
@@ -65,8 +75,16 @@ function RouteComponent() {
                 </li>
                 <li className="ml-4 inline-flex md:mt-8 md:ml-0 md:flex">
                   <Link to="/summary" className="md:flex">
-                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white in-data-[status=active]:border-none in-data-[status=active]:bg-blue-200">
-                      <span className="text-center text-sm font-bold text-white in-data-[status=active]:text-blue-950">
+                    <span
+                      className={`inline-flex h-8 w-8 items-center justify-center rounded-full border border-white ${
+                        showSummaryActive ? 'border-none bg-blue-200' : ''
+                      }`}
+                    >
+                      <span
+                        className={`text-center text-sm font-bold ${
+                          showSummaryActive ? 'text-blue-950' : 'text-white'
+                        }`}
+                      >
                         4
                       </span>
                     </span>
