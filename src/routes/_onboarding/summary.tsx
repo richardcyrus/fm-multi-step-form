@@ -47,7 +47,10 @@ function SummaryComponent() {
                   {plan} ({show_yearly ? 'Yearly' : 'Monthly'})
                 </span>
                 <span className="text-sm font-normal text-grey-500">
-                  <Link to={plansRoute.to} className="hover:text-purple-600">
+                  <Link
+                    to={plansRoute.to}
+                    className="underline hover:text-purple-600"
+                  >
                     Change
                   </Link>
                 </span>
@@ -78,12 +81,12 @@ function SummaryComponent() {
               Total (per {`${show_yearly ? 'year' : 'month'}`})
             </span>
             <span className="text-base font-bold text-purple-600 md:text-xl">
-              +{show_yearly ? `$${yearly_total}/yr` : `$${monthly_total}/mo`}
+              {show_yearly ? `$${yearly_total}/yr` : `+$${monthly_total}/mo`}
             </span>
           </div>
         </div>
       </div>
-      <div className="inline-flex w-full justify-end bg-white p-4 md:pr-17.5 md:pl-10 lg:pr-25 lg:pl-21">
+      <div className="inline-flex w-full justify-end bg-white p-4 md:bg-transparent md:pr-17.5 md:pl-10 lg:pr-25 lg:pl-21">
         <Button
           variant="additional"
           type="button"

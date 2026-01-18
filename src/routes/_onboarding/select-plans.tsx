@@ -139,7 +139,7 @@ function SelectPlansComponent() {
           </form>
         </div>
       </div>
-      <div className="inline-flex w-full justify-end bg-white p-4 md:pr-17.5 md:pl-10 lg:pr-25 lg:pl-21">
+      <div className="inline-flex w-full justify-end bg-white p-4 md:bg-transparent md:pr-17.5 md:pl-10 lg:pr-25 lg:pl-21">
         <Button
           variant="additional"
           type="button"
