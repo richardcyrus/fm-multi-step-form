@@ -47,7 +47,12 @@ function SummaryComponent() {
 
   const confirmPlan = () => {
     reset()
-    navigate({ to: thankYouRoute.to })
+    navigate({
+      to: thankYouRoute.to,
+      mask: {
+        to: '/summary',
+      },
+    })
   }
 
   return (
