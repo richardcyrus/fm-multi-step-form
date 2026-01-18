@@ -1,18 +1,29 @@
-import { createFileRoute } from '@tanstack/react-router'
 import { useStore } from '@tanstack/react-form-start'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import type { z } from 'zod'
 import { Button } from '@/components/Button'
 import { useAppForm } from '@/hooks/form'
+import { validatePersonalInfo } from '@/lib/routeValidation'
 import { gamingPlanSchema } from '@/lib/schema'
-import { useGamingPlanStore } from '@/store/store'
 import { Route as addonsRoute } from '@/routes/_onboarding/addons'
 import { Route as yourInfoRoute } from '@/routes/_onboarding/your-info'
+import { useGamingPlanStore } from '@/store/store'
 
-import arcadeIcon from '@/assets/icon-arcade.svg'
 import advancedIcon from '@/assets/icon-advanced.svg'
+import arcadeIcon from '@/assets/icon-arcade.svg'
 import proIcon from '@/assets/icon-pro.svg'
 
 export const Route = createFileRoute('/_onboarding/select-plans')({
+  beforeLoad: ({ context }) => {
+    const storeState = context.getStoreState()
+    const validation = validatePersonalInfo(storeState)
+
+    if (!validation.isValid) {
+      throw redirect({
+        to: validation.redirectTo!,
+      })
+    }
+  },
   component: SelectPlansComponent,
 })
 

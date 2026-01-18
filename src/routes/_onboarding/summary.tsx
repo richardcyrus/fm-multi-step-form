@@ -1,11 +1,22 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute, redirect } from '@tanstack/react-router'
 import { Button } from '@/components/Button'
+import { validateSummary } from '@/lib/routeValidation'
 import { Route as addonsRoute } from '@/routes/_onboarding/addons'
-import { useGamingPlanStore } from '@/store/store'
 import { Route as plansRoute } from '@/routes/_onboarding/select-plans'
 import { Route as thankYouRoute } from '@/routes/_onboarding/thank-you'
+import { useGamingPlanStore } from '@/store/store'
 
 export const Route = createFileRoute('/_onboarding/summary')({
+  beforeLoad: ({ context }) => {
+    const storeState = context.getStoreState()
+    const validation = validateSummary(storeState)
+
+    if (!validation.isValid) {
+      throw redirect({
+        to: validation.redirectTo!,
+      })
+    }
+  },
   component: SummaryComponent,
 })
 
