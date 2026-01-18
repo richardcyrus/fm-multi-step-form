@@ -1,11 +1,35 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { Button } from '@/components/Button'
+import { Route as addonsRoute } from '@/routes/_onboarding/addons'
+import { useGamingPlanStore } from '@/store/store'
+import { Route as plansRoute } from '@/routes/_onboarding/select-plans'
+import { Route as thankYouRoute } from '@/routes/_onboarding/thank-you'
 
 export const Route = createFileRoute('/_onboarding/summary')({
   component: SummaryComponent,
 })
 
 function SummaryComponent() {
+  const navigate = Route.useNavigate()
+
+  const plan = useGamingPlanStore((state) => state.plan)
+  const plan_monthly_price = useGamingPlanStore(
+    (state) => state.plan_monthly_price,
+  )
+  const plan_yearly_price = useGamingPlanStore(
+    (state) => state.plan_yearly_price,
+  )
+  const show_yearly = useGamingPlanStore((state) => state.show_yearly)
+  const chosen_addons = useGamingPlanStore((state) => state.chosen_addons)
+  const monthly_total = useGamingPlanStore((state) => state.getMonthlyTotal)()
+  const yearly_total = useGamingPlanStore((state) => state.getYearlyTotal)()
+  const { reset } = useGamingPlanStore()
+
+  const confirmPlan = () => {
+    reset()
+    navigate({ to: thankYouRoute.to })
+  }
+
   return (
     <>
       <div className="flex-1">
@@ -20,41 +44,60 @@ function SummaryComponent() {
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center">
               <div className="flex flex-col md:gap-2">
                 <span className="text-sm font-medium text-blue-950 md:text-base">
-                  Arcade (Yearly)
+                  {plan} ({show_yearly ? 'Yearly' : 'Monthly'})
                 </span>
                 <span className="text-sm font-normal text-grey-500">
-                  <Link to="/select-plans" className="hover:text-purple-600">
+                  <Link to={plansRoute.to} className="hover:text-purple-600">
                     Change
                   </Link>
                 </span>
               </div>
               <div className="text-sm font-bold tracking-widest text-blue-950 md:text-base lg:tracking-normal">
-                $90/yr
+                {show_yearly
+                  ? `$${plan_yearly_price}/yr`
+                  : `$${plan_monthly_price}/mo`}
               </div>
             </div>
             <hr className="my-4 border-0 border-t border-grey-500/20" />
-            <div className="flex items-center justify-between md:gap-2">
-              <span className="text-sm text-grey-500">Online service</span>
-              <span className="text-sm text-blue-950">+$10/yr</span>
-            </div>
-            <div className="mt-4 flex items-center justify-between md:gap-2">
-              <span className="text-sm text-grey-500">Larger storage</span>
-              <span className="text-sm text-blue-950">+$20/yr</span>
-            </div>
+            {chosen_addons.map((addon) => (
+              <div
+                key={addon.id}
+                className="flex items-center justify-between md:gap-2"
+              >
+                <span className="text-sm text-grey-500">{addon.label}</span>
+                <span className="text-sm text-blue-950">
+                  {show_yearly
+                    ? `+$${addon.yearly_price}/yr`
+                    : `+$${addon.monthly_price}/mo`}
+                </span>
+              </div>
+            ))}
           </div>
           <div className="mt-6 flex items-center justify-between px-4 md:mt-8 lg:px-6">
-            <span className="text-sm text-grey-500">Total (per month)</span>
+            <span className="text-sm text-grey-500">
+              Total (per {`${show_yearly ? 'year' : 'month'}`})
+            </span>
             <span className="text-base font-bold text-purple-600 md:text-xl">
-              +120/yr
+              +{show_yearly ? `$${yearly_total}/yr` : `$${monthly_total}/mo`}
             </span>
           </div>
         </div>
       </div>
       <div className="inline-flex w-full justify-end bg-white p-4 md:pr-17.5 md:pl-10 lg:pr-25 lg:pl-21">
-        <Button variant="additional" type="button" className="mr-auto">
+        <Button
+          variant="additional"
+          type="button"
+          className="mr-auto"
+          onClick={() => navigate({ to: addonsRoute.to })}
+        >
           Go Back
         </Button>
-        <Button variant="secondary" type="submit" className="ml-auto">
+        <Button
+          variant="secondary"
+          type="submit"
+          className="ml-auto"
+          onClick={confirmPlan}
+        >
           Confirm
         </Button>
       </div>

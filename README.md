@@ -54,6 +54,7 @@ Users should be able to:
 - [5 Ways to Validate Phone Numbers in Zod](https://www.abstractapi.com/guides/api-functions/phone-number-validation-in-zod)
 - [Usage with Checkboxes](https://github.com/TanStack/form/issues/363)
 - [Forms in React](https://tutorial.techaltum.com/react-forms.html)
+- [Zustand Selectors and Derived State](https://app.studyraid.com/en/read/11947/381036/selectors-and-derived-state)
 
 ## Author
 
