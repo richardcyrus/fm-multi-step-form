@@ -41,9 +41,9 @@ function SelectPlansComponent() {
   const form = useAppForm({
     defaultValues: {
       plan: plan,
-      plan_monthly_price: plan_monthly_price || 0,
-      plan_yearly_price: plan_yearly_price || 0,
-      show_yearly: show_yearly || false,
+      plan_monthly_price: plan_monthly_price,
+      plan_yearly_price: plan_yearly_price,
+      show_yearly: show_yearly,
     },
     listeners: {
       onChange: ({ formApi, fieldApi }) => {

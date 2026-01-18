@@ -19,9 +19,9 @@ function AddonsComponent() {
 
   const form = useAppForm({
     defaultValues: {
-      show_yearly: show_yearly || false,
-      addons: addons || [],
-      chosen_addons: chosen_addons || [],
+      show_yearly: show_yearly,
+      addons: addons,
+      chosen_addons: chosen_addons,
     },
     listeners: {
       onSubmit: ({ formApi }) => {
@@ -90,7 +90,7 @@ function AddonsComponent() {
                     subLabel="Access to multiplayer games"
                     price={1}
                     yearlyPrice={10}
-                    showYearly={show_yearly!}
+                    showYearly={show_yearly}
                     isArray={true}
                     value="online_service"
                   />
@@ -103,7 +103,7 @@ function AddonsComponent() {
                     subLabel="Extra 1TB of cloud save"
                     price={2}
                     yearlyPrice={20}
-                    showYearly={show_yearly!}
+                    showYearly={show_yearly}
                     isArray={true}
                     value="larger_storage"
                   />
@@ -116,7 +116,7 @@ function AddonsComponent() {
                     subLabel="Custom theme on your profile"
                     price={2}
                     yearlyPrice={20}
-                    showYearly={show_yearly!}
+                    showYearly={show_yearly}
                     isArray={true}
                     value="custom_profile"
                   />

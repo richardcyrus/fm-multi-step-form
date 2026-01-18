@@ -27,9 +27,9 @@ function YourInfoComponent() {
 
   const form = useAppForm({
     defaultValues: {
-      full_name: full_name || '',
-      email_address: email_address || '',
-      phone_number: phone_number || '',
+      full_name: full_name,
+      email_address: email_address,
+      phone_number: phone_number,
     },
     validators: {
       onChange: yourInfoSchema,
