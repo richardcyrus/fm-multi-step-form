@@ -1,4 +1,5 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
+import { useShallow } from 'zustand/shallow'
 import type { z } from 'zod'
 import { Button } from '@/components/Button'
 import { useAppForm } from '@/hooks/form'
@@ -44,11 +45,15 @@ type AddonsSchema = z.infer<typeof addonsSchema>
 
 function AddonsComponent() {
   const navigate = Route.useNavigate()
-  const setData = useGamingPlanStore((state) => state.setData)
 
-  const show_yearly = useGamingPlanStore((state) => state.show_yearly)
-  const addons = useGamingPlanStore((state) => state.addons)
-  const chosen_addons = useGamingPlanStore((state) => state.chosen_addons)
+  const { addons, chosen_addons, show_yearly, setData } = useGamingPlanStore(
+    useShallow((state) => ({
+      addons: state.addons,
+      chosen_addons: state.chosen_addons,
+      show_yearly: state.show_yearly,
+      setData: state.setData,
+    })),
+  )
 
   const form = useAppForm({
     defaultValues: {

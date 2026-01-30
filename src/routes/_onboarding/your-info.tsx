@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useShallow } from 'zustand/shallow'
 import type { z } from 'zod'
 import { useAppForm } from '@/hooks/form'
 import { gamingPlanSchema } from '@/lib/schema'
@@ -19,11 +20,16 @@ type YourInfoSchema = z.infer<typeof yourInfoSchema>
 
 function YourInfoComponent() {
   const navigate = Route.useNavigate()
-  const setData = useGamingPlanStore((state) => state.setData)
 
-  const full_name = useGamingPlanStore((state) => state.full_name)
-  const email_address = useGamingPlanStore((state) => state.email_address)
-  const phone_number = useGamingPlanStore((state) => state.phone_number)
+  const { setData, full_name, email_address, phone_number } =
+    useGamingPlanStore(
+      useShallow((state) => ({
+        setData: state.setData,
+        full_name: state.full_name,
+        email_address: state.email_address,
+        phone_number: state.phone_number,
+      })),
+    )
 
   const form = useAppForm({
     defaultValues: {
