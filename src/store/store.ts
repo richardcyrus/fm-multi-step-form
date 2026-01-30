@@ -7,9 +7,9 @@ const initialState: GamingPlanSchema = {
   email_address: '',
   phone_number: '',
   show_yearly: false,
-  plan: '',
-  plan_monthly_price: 0,
-  plan_yearly_price: 0,
+  plan: 'Arcade',
+  plan_monthly_price: 9,
+  plan_yearly_price: 90,
   addons: [],
   chosen_addons: [],
 }

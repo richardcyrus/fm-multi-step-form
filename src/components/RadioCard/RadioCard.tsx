@@ -29,7 +29,7 @@ export function RadioCard({
       <input
         type="radio"
         className="absolute h-0 w-0 cursor-pointer opacity-0"
-        defaultValue={label}
+        value={label}
         name={field.name}
         onChange={(e) => field.handleChange(e.target.value)}
         checked={label === field.state.value}
