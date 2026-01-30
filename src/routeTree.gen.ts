@@ -14,7 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as OnboardingYourInfoRouteImport } from './routes/_onboarding/your-info'
 import { Route as OnboardingThankYouRouteImport } from './routes/_onboarding/thank-you'
 import { Route as OnboardingSummaryRouteImport } from './routes/_onboarding/summary'
-import { Route as OnboardingSelectPlansRouteImport } from './routes/_onboarding/select-plans'
+import { Route as OnboardingSelectPlanRouteImport } from './routes/_onboarding/select-plan'
 import { Route as OnboardingAddonsRouteImport } from './routes/_onboarding/addons'
 
 const OnboardingRouteRoute = OnboardingRouteRouteImport.update({
@@ -41,9 +41,9 @@ const OnboardingSummaryRoute = OnboardingSummaryRouteImport.update({
   path: '/summary',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
-const OnboardingSelectPlansRoute = OnboardingSelectPlansRouteImport.update({
-  id: '/select-plans',
-  path: '/select-plans',
+const OnboardingSelectPlanRoute = OnboardingSelectPlanRouteImport.update({
+  id: '/select-plan',
+  path: '/select-plan',
   getParentRoute: () => OnboardingRouteRoute,
 } as any)
 const OnboardingAddonsRoute = OnboardingAddonsRouteImport.update({
@@ -55,7 +55,7 @@ const OnboardingAddonsRoute = OnboardingAddonsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/addons': typeof OnboardingAddonsRoute
-  '/select-plans': typeof OnboardingSelectPlansRoute
+  '/select-plan': typeof OnboardingSelectPlanRoute
   '/summary': typeof OnboardingSummaryRoute
   '/thank-you': typeof OnboardingThankYouRoute
   '/your-info': typeof OnboardingYourInfoRoute
@@ -63,7 +63,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/addons': typeof OnboardingAddonsRoute
-  '/select-plans': typeof OnboardingSelectPlansRoute
+  '/select-plan': typeof OnboardingSelectPlanRoute
   '/summary': typeof OnboardingSummaryRoute
   '/thank-you': typeof OnboardingThankYouRoute
   '/your-info': typeof OnboardingYourInfoRoute
@@ -73,7 +73,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_onboarding': typeof OnboardingRouteRouteWithChildren
   '/_onboarding/addons': typeof OnboardingAddonsRoute
-  '/_onboarding/select-plans': typeof OnboardingSelectPlansRoute
+  '/_onboarding/select-plan': typeof OnboardingSelectPlanRoute
   '/_onboarding/summary': typeof OnboardingSummaryRoute
   '/_onboarding/thank-you': typeof OnboardingThankYouRoute
   '/_onboarding/your-info': typeof OnboardingYourInfoRoute
@@ -83,7 +83,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/addons'
-    | '/select-plans'
+    | '/select-plan'
     | '/summary'
     | '/thank-you'
     | '/your-info'
@@ -91,7 +91,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/addons'
-    | '/select-plans'
+    | '/select-plan'
     | '/summary'
     | '/thank-you'
     | '/your-info'
@@ -100,7 +100,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_onboarding'
     | '/_onboarding/addons'
-    | '/_onboarding/select-plans'
+    | '/_onboarding/select-plan'
     | '/_onboarding/summary'
     | '/_onboarding/thank-you'
     | '/_onboarding/your-info'
@@ -148,11 +148,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OnboardingSummaryRouteImport
       parentRoute: typeof OnboardingRouteRoute
     }
-    '/_onboarding/select-plans': {
-      id: '/_onboarding/select-plans'
-      path: '/select-plans'
-      fullPath: '/select-plans'
-      preLoaderRoute: typeof OnboardingSelectPlansRouteImport
+    '/_onboarding/select-plan': {
+      id: '/_onboarding/select-plan'
+      path: '/select-plan'
+      fullPath: '/select-plan'
+      preLoaderRoute: typeof OnboardingSelectPlanRouteImport
       parentRoute: typeof OnboardingRouteRoute
     }
     '/_onboarding/addons': {
@@ -167,7 +167,7 @@ declare module '@tanstack/react-router' {
 
 interface OnboardingRouteRouteChildren {
   OnboardingAddonsRoute: typeof OnboardingAddonsRoute
-  OnboardingSelectPlansRoute: typeof OnboardingSelectPlansRoute
+  OnboardingSelectPlanRoute: typeof OnboardingSelectPlanRoute
   OnboardingSummaryRoute: typeof OnboardingSummaryRoute
   OnboardingThankYouRoute: typeof OnboardingThankYouRoute
   OnboardingYourInfoRoute: typeof OnboardingYourInfoRoute
@@ -175,7 +175,7 @@ interface OnboardingRouteRouteChildren {
 
 const OnboardingRouteRouteChildren: OnboardingRouteRouteChildren = {
   OnboardingAddonsRoute: OnboardingAddonsRoute,
-  OnboardingSelectPlansRoute: OnboardingSelectPlansRoute,
+  OnboardingSelectPlanRoute: OnboardingSelectPlanRoute,
   OnboardingSummaryRoute: OnboardingSummaryRoute,
   OnboardingThankYouRoute: OnboardingThankYouRoute,
   OnboardingYourInfoRoute: OnboardingYourInfoRoute,

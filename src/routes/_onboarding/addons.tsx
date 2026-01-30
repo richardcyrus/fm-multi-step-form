@@ -7,7 +7,7 @@ import {
   validatePlanSelection,
 } from '@/lib/routeValidation'
 import { gamingPlanSchema } from '@/lib/schema'
-import { Route as plansRoute } from '@/routes/_onboarding/select-plans'
+import { Route as plansRoute } from '@/routes/_onboarding/select-plan'
 import { Route as summaryRoute } from '@/routes/_onboarding/summary'
 import { useGamingPlanStore } from '@/store/store'
 

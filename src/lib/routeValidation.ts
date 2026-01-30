@@ -37,7 +37,7 @@ export const validatePlanSelection = (
 
   return {
     isValid: missingFields.length === 0,
-    redirectTo: missingFields.length > 0 ? '/select-plans' : undefined,
+    redirectTo: missingFields.length > 0 ? '/select-plan' : undefined,
     missingFields,
   }
 }

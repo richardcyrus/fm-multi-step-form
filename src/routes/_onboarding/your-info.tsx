@@ -3,7 +3,7 @@ import type { z } from 'zod'
 import { useAppForm } from '@/hooks/form'
 import { gamingPlanSchema } from '@/lib/schema'
 import { useGamingPlanStore } from '@/store/store'
-import { Route as plansRoute } from '@/routes/_onboarding/select-plans'
+import { Route as plansRoute } from '@/routes/_onboarding/select-plan'
 
 export const Route = createFileRoute('/_onboarding/your-info')({
   component: YourInfoComponent,

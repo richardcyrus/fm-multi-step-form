@@ -40,7 +40,7 @@ function RouteComponent() {
                   </Link>
                 </li>
                 <li className="ml-4 inline-flex md:mt-8 md:ml-0 md:flex">
-                  <Link to="/select-plans" className="md:flex">
+                  <Link to="/select-plan" className="md:flex">
                     <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white in-data-[status=active]:border-none in-data-[status=active]:bg-blue-200">
                       <span className="text-center text-sm font-bold text-white in-data-[status=active]:text-blue-950">
                         2

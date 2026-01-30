@@ -2,7 +2,7 @@ import { Link, createFileRoute, redirect } from '@tanstack/react-router'
 import { Button } from '@/components/Button'
 import { validateSummary } from '@/lib/routeValidation'
 import { Route as addonsRoute } from '@/routes/_onboarding/addons'
-import { Route as plansRoute } from '@/routes/_onboarding/select-plans'
+import { Route as plansRoute } from '@/routes/_onboarding/select-plan'
 import { Route as thankYouRoute } from '@/routes/_onboarding/thank-you'
 import { useGamingPlanStore } from '@/store/store'
 

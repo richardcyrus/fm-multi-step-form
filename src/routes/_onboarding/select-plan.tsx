@@ -1,5 +1,6 @@
 import { useStore } from '@tanstack/react-form-start'
 import { createFileRoute, redirect } from '@tanstack/react-router'
+import { useShallow } from 'zustand/shallow'
 import type { z } from 'zod'
 import { Button } from '@/components/Button'
 import { useAppForm } from '@/hooks/form'
@@ -13,7 +14,7 @@ import advancedIcon from '@/assets/icon-advanced.svg'
 import arcadeIcon from '@/assets/icon-arcade.svg'
 import proIcon from '@/assets/icon-pro.svg'
 
-export const Route = createFileRoute('/_onboarding/select-plans')({
+export const Route = createFileRoute('/_onboarding/select-plan')({
   beforeLoad: ({ context }) => {
     const storeState = context.getStoreState()
     const validation = validatePersonalInfo(storeState)
@@ -38,16 +39,17 @@ type SelectPlanSchema = z.infer<typeof selectPlanSchema>
 
 function SelectPlansComponent() {
   const navigate = Route.useNavigate()
-  const setData = useGamingPlanStore((state) => state.setData)
 
-  const plan = useGamingPlanStore((state) => state.plan)
-  const plan_monthly_price = useGamingPlanStore(
-    (state) => state.plan_monthly_price,
-  )
-  const plan_yearly_price = useGamingPlanStore(
-    (state) => state.plan_yearly_price,
-  )
-  const show_yearly = useGamingPlanStore((state) => state.show_yearly)
+  const { plan, plan_monthly_price, plan_yearly_price, show_yearly, setData } =
+    useGamingPlanStore(
+      useShallow((state) => ({
+        plan: state.plan,
+        plan_monthly_price: state.plan_monthly_price,
+        plan_yearly_price: state.plan_yearly_price,
+        show_yearly: state.show_yearly,
+        setData: state.setData,
+      })),
+    )
 
   const form = useAppForm({
     defaultValues: {
