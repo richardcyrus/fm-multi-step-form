@@ -95,7 +95,9 @@ function SummaryComponent() {
               Total (per {`${show_yearly ? 'year' : 'month'}`})
             </span>
             <span className="text-base font-bold text-purple-600 md:text-xl">
-              {show_yearly ? `$${yearly_total}/yr` : `+$${monthly_total}/mo`}
+              {show_yearly
+                ? `$${yearly_total()}/yr`
+                : `+$${monthly_total()}/mo`}
             </span>
           </div>
         </div>
