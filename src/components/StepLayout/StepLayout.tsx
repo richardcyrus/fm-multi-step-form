@@ -23,7 +23,7 @@ export function StepLayout({
           <p className="mt-2 text-base font-normal text-grey-500">
             {description}
           </p>
-          <div className="mt-6md:mt-8 lg:mt-10">{children}</div>
+          <div className="mt-6 md:mt-8 lg:mt-10">{children}</div>
         </div>
       </div>
       {actions && (
