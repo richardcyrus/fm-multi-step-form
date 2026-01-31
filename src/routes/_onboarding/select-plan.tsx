@@ -37,6 +37,27 @@ const selectPlanSchema = gamingPlanSchema.pick({
 
 type SelectPlanSchema = z.infer<typeof selectPlanSchema>
 
+const planOptions = [
+  {
+    label: 'Arcade',
+    icon: arcadeIcon,
+    price: 9,
+    yearlyPrice: 90,
+  },
+  {
+    label: 'Advanced',
+    icon: advancedIcon,
+    price: 12,
+    yearlyPrice: 120,
+  },
+  {
+    label: 'Pro',
+    icon: proIcon,
+    price: 15,
+    yearlyPrice: 150,
+  },
+]
+
 function SelectPlansComponent() {
   const navigate = Route.useNavigate()
 
@@ -60,27 +81,6 @@ function SelectPlansComponent() {
     },
     validators: {
       onChange: selectPlanSchema,
-    },
-    listeners: {
-      onChange: ({ formApi, fieldApi }) => {
-        switch (fieldApi.state.value) {
-          case 'Arcade': {
-            formApi.setFieldValue('plan_monthly_price', 9)
-            formApi.setFieldValue('plan_yearly_price', 90)
-            break
-          }
-          case 'Advanced': {
-            formApi.setFieldValue('plan_monthly_price', 12)
-            formApi.setFieldValue('plan_yearly_price', 120)
-            break
-          }
-          case 'Pro': {
-            formApi.setFieldValue('plan_monthly_price', 15)
-            formApi.setFieldValue('plan_yearly_price', 150)
-            break
-          }
-        }
-      },
     },
     onSubmit: ({ value }: { value: SelectPlanSchema }) => {
       setData(value)
@@ -107,43 +107,55 @@ function SelectPlansComponent() {
               e.stopPropagation()
               form.handleSubmit()
             }}
-            id="select-plans"
+            id="select-plan"
           >
+            <form.AppField name="plan_monthly_price">
+              {(field) => (
+                <input
+                  type="hidden"
+                  name={field.name}
+                  value={field.state.value}
+                  onChange={(e) => field.handleChange(e.target.valueAsNumber)}
+                />
+              )}
+            </form.AppField>
+            <form.AppField name="plan_yearly_price">
+              {(field) => (
+                <input
+                  type="hidden"
+                  name={field.name}
+                  value={field.state.value}
+                  onChange={(e) => field.handleChange(e.target.valueAsNumber)}
+                />
+              )}
+            </form.AppField>
             <fieldset className="flex flex-col gap-2 lg:flex-row lg:gap-4.5">
               <legend className="sr-only">Select your plan</legend>
-              <form.AppField name="plan">
-                {(field) => (
-                  <field.RadioCard
-                    label="Arcade"
-                    icon={arcadeIcon}
-                    price={9}
-                    yearlyPrice={90}
-                    showYearly={showYearly}
-                  />
-                )}
-              </form.AppField>
-              <form.AppField name="plan">
-                {(field) => (
-                  <field.RadioCard
-                    label="Advanced"
-                    icon={advancedIcon}
-                    price={12}
-                    yearlyPrice={120}
-                    showYearly={showYearly}
-                  />
-                )}
-              </form.AppField>
-              <form.AppField name="plan">
-                {(field) => (
-                  <field.RadioCard
-                    label="Pro"
-                    icon={proIcon}
-                    price={15}
-                    yearlyPrice={150}
-                    showYearly={showYearly}
-                  />
-                )}
-              </form.AppField>
+              {planOptions.map((planOpt) => (
+                <form.AppField
+                  key={planOpt.label}
+                  name="plan"
+                  listeners={{
+                    onChange: () => {
+                      form.setFieldValue('plan_monthly_price', planOpt.price)
+                      form.setFieldValue(
+                        'plan_yearly_price',
+                        planOpt.yearlyPrice,
+                      )
+                    },
+                  }}
+                >
+                  {(field) => (
+                    <field.RadioCard
+                      label={planOpt.label}
+                      icon={planOpt.icon}
+                      price={planOpt.price}
+                      yearlyPrice={planOpt.yearlyPrice}
+                      showYearly={showYearly}
+                    />
+                  )}
+                </form.AppField>
+              ))}
             </fieldset>
             <div className="mt-6 lg:mt-8">
               <form.AppField name="show_yearly">
@@ -166,7 +178,7 @@ function SelectPlansComponent() {
         </Button>
         <form.AppForm>
           <form.SubmitButton
-            form="select-plans"
+            form="select-plan"
             variant="primary"
             className="ml-auto"
           >
