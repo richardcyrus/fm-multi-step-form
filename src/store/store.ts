@@ -97,7 +97,7 @@ export const useSummary = () =>
       plan_yearly_price: state.plan_yearly_price,
       show_yearly: state.show_yearly,
       chosen_addons: state.chosen_addons,
-      monthlyTotal: state.monthlyTotal,
-      yearlyTotal: state.yearlyTotal,
+      monthly_total: state.monthlyTotal,
+      yearly_total: state.yearlyTotal,
     })),
   )

@@ -1,35 +1,20 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useShallow } from 'zustand/shallow'
-import type { z } from 'zod'
+import type { YourInfoStepSchema } from '@/lib/schema'
 import { useAppForm } from '@/hooks/form'
-import { gamingPlanSchema } from '@/lib/schema'
-import { useGamingPlanStore } from '@/store/store'
+import { yourInfoStepSchema } from '@/lib/schema'
+import { useGamingPlanStore, usePersonalInfo } from '@/store/store'
 import { Route as plansRoute } from '@/routes/_onboarding/select-plan'
 
 export const Route = createFileRoute('/_onboarding/your-info')({
   component: YourInfoComponent,
 })
 
-const yourInfoSchema = gamingPlanSchema.pick({
-  full_name: true,
-  email_address: true,
-  phone_number: true,
-})
-
-type YourInfoSchema = z.infer<typeof yourInfoSchema>
-
 function YourInfoComponent() {
   const navigate = Route.useNavigate()
 
-  const { setData, full_name, email_address, phone_number } =
-    useGamingPlanStore(
-      useShallow((state) => ({
-        setData: state.setData,
-        full_name: state.full_name,
-        email_address: state.email_address,
-        phone_number: state.phone_number,
-      })),
-    )
+  const setData = useGamingPlanStore((state) => state.setData)
+
+  const { full_name, email_address, phone_number } = usePersonalInfo()
 
   const form = useAppForm({
     defaultValues: {
@@ -38,9 +23,9 @@ function YourInfoComponent() {
       phone_number: phone_number,
     },
     validators: {
-      onChange: yourInfoSchema,
+      onChange: yourInfoStepSchema,
     },
-    onSubmit: ({ value }: { value: YourInfoSchema }) => {
+    onSubmit: ({ value }: { value: YourInfoStepSchema }) => {
       setData(value)
       navigate({ to: plansRoute.to })
     },

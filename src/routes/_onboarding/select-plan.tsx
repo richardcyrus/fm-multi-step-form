@@ -1,14 +1,13 @@
 import { useStore } from '@tanstack/react-form-start'
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import { useShallow } from 'zustand/shallow'
-import type { z } from 'zod'
+import type { SelectPlanStepSchema } from '@/lib/schema'
 import { Button } from '@/components/Button'
 import { useAppForm } from '@/hooks/form'
 import { validatePersonalInfo } from '@/lib/routeValidation'
-import { gamingPlanSchema } from '@/lib/schema'
+import { selectPlanStepSchema } from '@/lib/schema'
 import { Route as addonsRoute } from '@/routes/_onboarding/addons'
 import { Route as yourInfoRoute } from '@/routes/_onboarding/your-info'
-import { useGamingPlanStore } from '@/store/store'
+import { useGamingPlanStore, usePlanSelection } from '@/store/store'
 import { planOptions } from '@/data/plans'
 
 export const Route = createFileRoute('/_onboarding/select-plan')({
@@ -25,28 +24,13 @@ export const Route = createFileRoute('/_onboarding/select-plan')({
   component: SelectPlansComponent,
 })
 
-const selectPlanSchema = gamingPlanSchema.pick({
-  plan: true,
-  plan_monthly_price: true,
-  plan_yearly_price: true,
-  show_yearly: true,
-})
-
-type SelectPlanSchema = z.infer<typeof selectPlanSchema>
-
 function SelectPlansComponent() {
   const navigate = Route.useNavigate()
 
-  const { plan, plan_monthly_price, plan_yearly_price, show_yearly, setData } =
-    useGamingPlanStore(
-      useShallow((state) => ({
-        plan: state.plan,
-        plan_monthly_price: state.plan_monthly_price,
-        plan_yearly_price: state.plan_yearly_price,
-        show_yearly: state.show_yearly,
-        setData: state.setData,
-      })),
-    )
+  const setData = useGamingPlanStore((state) => state.setData)
+
+  const { plan, plan_monthly_price, plan_yearly_price, show_yearly } =
+    usePlanSelection()
 
   const form = useAppForm({
     defaultValues: {
@@ -56,9 +40,9 @@ function SelectPlansComponent() {
       show_yearly: show_yearly,
     },
     validators: {
-      onChange: selectPlanSchema,
+      onChange: selectPlanStepSchema,
     },
-    onSubmit: ({ value }: { value: SelectPlanSchema }) => {
+    onSubmit: ({ value }: { value: SelectPlanStepSchema }) => {
       setData(value)
       navigate({ to: addonsRoute.to })
     },

@@ -1,17 +1,15 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import { useShallow } from 'zustand/shallow'
-import type { z } from 'zod'
-import type { AddOnSchema } from '@/lib/schema'
+import type { AddOnSchema, AddonsStepSchema } from '@/lib/schema'
 import { Button } from '@/components/Button'
 import { useAppForm } from '@/hooks/form'
 import {
   validatePersonalInfo,
   validatePlanSelection,
 } from '@/lib/routeValidation'
-import { gamingPlanSchema } from '@/lib/schema'
+import { addonsStepSchema } from '@/lib/schema'
 import { Route as plansRoute } from '@/routes/_onboarding/select-plan'
 import { Route as summaryRoute } from '@/routes/_onboarding/summary'
-import { useGamingPlanStore } from '@/store/store'
+import { useAddons, useGamingPlanStore } from '@/store/store'
 import { addonOptions } from '@/data/addons'
 
 export const Route = createFileRoute('/_onboarding/addons')({
@@ -37,25 +35,11 @@ export const Route = createFileRoute('/_onboarding/addons')({
   component: AddonsComponent,
 })
 
-const addonsSchema = gamingPlanSchema.pick({
-  addons: true,
-  chosen_addons: true,
-  show_yearly: true,
-})
-
-type AddonsStepSchema = z.infer<typeof addonsSchema>
-
 function AddonsComponent() {
   const navigate = Route.useNavigate()
+  const setData = useGamingPlanStore((state) => state.setData)
 
-  const { addons, chosen_addons, show_yearly, setData } = useGamingPlanStore(
-    useShallow((state) => ({
-      addons: state.addons,
-      chosen_addons: state.chosen_addons,
-      show_yearly: state.show_yearly,
-      setData: state.setData,
-    })),
-  )
+  const { addons, chosen_addons, show_yearly } = useAddons()
 
   const form = useAppForm({
     defaultValues: {
@@ -64,7 +48,7 @@ function AddonsComponent() {
       chosen_addons: chosen_addons,
     },
     validators: {
-      onChange: addonsSchema,
+      onChange: addonsStepSchema,
     },
     listeners: {
       onSubmit: ({ formApi }) => {

@@ -1,11 +1,10 @@
 import { Link, createFileRoute, redirect } from '@tanstack/react-router'
-import { useShallow } from 'zustand/shallow'
 import { Button } from '@/components/Button'
 import { validateSummary } from '@/lib/routeValidation'
 import { Route as addonsRoute } from '@/routes/_onboarding/addons'
 import { Route as plansRoute } from '@/routes/_onboarding/select-plan'
 import { Route as thankYouRoute } from '@/routes/_onboarding/thank-you'
-import { useGamingPlanStore } from '@/store/store'
+import { useGamingPlanStore, useSummary } from '@/store/store'
 
 export const Route = createFileRoute('/_onboarding/summary')({
   beforeLoad: ({ context }) => {
@@ -31,25 +30,9 @@ function SummaryComponent() {
     plan_yearly_price,
     show_yearly,
     chosen_addons,
-  } = useGamingPlanStore(
-    useShallow((state) => ({
-      plan: state.plan,
-      plan_monthly_price: state.plan_monthly_price,
-      plan_yearly_price: state.plan_yearly_price,
-      show_yearly: state.show_yearly,
-      chosen_addons: state.chosen_addons,
-    })),
-  )
-  const monthly_total = useGamingPlanStore(
-    (state) =>
-      state.plan_monthly_price +
-      state.chosen_addons.reduce((sum, addon) => sum + addon.monthly_price, 0),
-  )
-  const yearly_total = useGamingPlanStore(
-    (state) =>
-      state.plan_yearly_price +
-      state.chosen_addons.reduce((sum, addon) => sum + addon.yearly_price, 0),
-  )
+    monthly_total,
+    yearly_total,
+  } = useSummary()
 
   const confirmPlan = () => {
     reset()
