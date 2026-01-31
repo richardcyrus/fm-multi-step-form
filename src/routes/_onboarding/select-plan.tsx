@@ -8,7 +8,7 @@ import { selectPlanStepSchema } from '@/lib/schema'
 import { Route as addonsRoute } from '@/routes/_onboarding/addons'
 import { Route as yourInfoRoute } from '@/routes/_onboarding/your-info'
 import { useGamingPlanStore, usePlanSelection } from '@/store/store'
-import { planOptions } from '@/data/plans'
+import { planOptions } from '@/data/gamingData'
 
 export const Route = createFileRoute('/_onboarding/select-plan')({
   beforeLoad: ({ context }) => {
@@ -97,10 +97,13 @@ function SelectPlansComponent() {
                   name="plan"
                   listeners={{
                     onChange: () => {
-                      form.setFieldValue('plan_monthly_price', planOpt.price)
+                      form.setFieldValue(
+                        'plan_monthly_price',
+                        planOpt.monthly_price,
+                      )
                       form.setFieldValue(
                         'plan_yearly_price',
-                        planOpt.yearlyPrice,
+                        planOpt.yearly_price,
                       )
                     },
                   }}
@@ -109,8 +112,8 @@ function SelectPlansComponent() {
                     <field.RadioCard
                       label={planOpt.label}
                       icon={planOpt.icon}
-                      price={planOpt.price}
-                      yearlyPrice={planOpt.yearlyPrice}
+                      price={planOpt.monthly_price}
+                      yearlyPrice={planOpt.yearly_price}
                       showYearly={showYearly}
                     />
                   )}

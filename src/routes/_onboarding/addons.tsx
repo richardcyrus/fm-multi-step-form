@@ -10,7 +10,7 @@ import { addonsStepSchema } from '@/lib/schema'
 import { Route as plansRoute } from '@/routes/_onboarding/select-plan'
 import { Route as summaryRoute } from '@/routes/_onboarding/summary'
 import { useAddons, useGamingPlanStore } from '@/store/store'
-import { addonOptions } from '@/data/addons'
+import { addonOptions } from '@/data/gamingData'
 
 export const Route = createFileRoute('/_onboarding/addons')({
   beforeLoad: ({ context }) => {
