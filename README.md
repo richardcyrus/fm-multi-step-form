@@ -44,6 +44,10 @@ Users should be able to:
 - [Tanstack Form](https://zustand.docs.pmnd.rs/getting-started/introduction)
 - [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction)
 
+### Continued development
+
+- For the Add-ons form, I somewhat hacked together the behavior for the checkbox list. I'd like to revisit this and see if I can make it work like uncontrolled components without having to do a custom `onChange` and the `isArray` flag.
+
 ### Useful resources
 
 - [OKLCH Color Picker & Converter](https://oklch.com/)

@@ -1,6 +1,7 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { useShallow } from 'zustand/shallow'
 import type { z } from 'zod'
+import type { AddOnSchema } from '@/lib/schema'
 import { Button } from '@/components/Button'
 import { useAppForm } from '@/hooks/form'
 import {
@@ -41,7 +42,31 @@ const addonsSchema = gamingPlanSchema.pick({
   show_yearly: true,
 })
 
-type AddonsSchema = z.infer<typeof addonsSchema>
+type AddonsStepSchema = z.infer<typeof addonsSchema>
+
+const addonOptions = [
+  {
+    name: 'online_service',
+    label: 'Online Service',
+    description: 'Access to multiplayer games',
+    monthly_price: 1,
+    yearly_price: 10,
+  },
+  {
+    name: 'larger_storage',
+    label: 'Larger storage',
+    description: 'Extra 1TB of cloud save',
+    monthly_price: 2,
+    yearly_price: 20,
+  },
+  {
+    name: 'custom_profile',
+    label: 'Customizable profile',
+    description: 'Custom theme on your profile',
+    monthly_price: 2,
+    yearly_price: 20,
+  },
+]
 
 function AddonsComponent() {
   const navigate = Route.useNavigate()
@@ -67,37 +92,23 @@ function AddonsComponent() {
     listeners: {
       onSubmit: ({ formApi }) => {
         const addons_list = formApi.getFieldValue('addons')
-        const addons_chosen = []
 
-        if (addons_list.includes('online_service')) {
-          addons_chosen.push({
-            id: 'online_service',
-            label: 'Online Service',
-            monthly_price: 1,
-            yearly_price: 10,
-          })
-        }
-        if (addons_list.includes('larger_storage')) {
-          addons_chosen.push({
-            id: 'larger_storage',
-            label: 'Larger storage',
-            monthly_price: 2,
-            yearly_price: 20,
-          })
-        }
-        if (addons_list.includes('custom_profile')) {
-          addons_chosen.push({
-            id: 'custom_profile',
-            label: 'Customizable profile',
-            monthly_price: 2,
-            yearly_price: 20,
-          })
-        }
+        const addons_chosen = addonOptions.reduce<Array<AddOnSchema>>(
+          (accumulator, option) => {
+            const item = addons_list.find((addon) => addon === option.name)
+            if (item) {
+              accumulator.push(option)
+            }
+
+            return accumulator
+          },
+          [],
+        )
 
         formApi.setFieldValue('chosen_addons', addons_chosen)
       },
     },
-    onSubmit: ({ value }: { value: AddonsSchema }) => {
+    onSubmit: ({ value }: { value: AddonsStepSchema }) => {
       setData(value)
       navigate({ to: summaryRoute.to })
     },
@@ -124,45 +135,21 @@ function AddonsComponent() {
           >
             <fieldset className="flex flex-col gap-2 md:gap-4">
               <legend className="sr-only">Pick your add-ons</legend>
-              <form.AppField name="addons">
-                {(field) => (
-                  <field.CheckboxCard
-                    label="Online Service"
-                    subLabel="Access to multiplayer games"
-                    price={1}
-                    yearlyPrice={10}
-                    showYearly={show_yearly}
-                    isArray={true}
-                    value="online_service"
-                  />
-                )}
-              </form.AppField>
-              <form.AppField name="addons">
-                {(field) => (
-                  <field.CheckboxCard
-                    label="Larger storage"
-                    subLabel="Extra 1TB of cloud save"
-                    price={2}
-                    yearlyPrice={20}
-                    showYearly={show_yearly}
-                    isArray={true}
-                    value="larger_storage"
-                  />
-                )}
-              </form.AppField>
-              <form.AppField name="addons">
-                {(field) => (
-                  <field.CheckboxCard
-                    label="Customizable profile"
-                    subLabel="Custom theme on your profile"
-                    price={2}
-                    yearlyPrice={20}
-                    showYearly={show_yearly}
-                    isArray={true}
-                    value="custom_profile"
-                  />
-                )}
-              </form.AppField>
+              {addonOptions.map((option, i) => (
+                <form.AppField key={i} name="addons">
+                  {(field) => (
+                    <field.CheckboxCard
+                      label={option.label}
+                      subLabel={option.description}
+                      price={option.monthly_price}
+                      yearlyPrice={option.yearly_price}
+                      showYearly={show_yearly}
+                      isArray={true}
+                      value={option.name}
+                    />
+                  )}
+                </form.AppField>
+              ))}
             </fieldset>
           </form>
         </div>

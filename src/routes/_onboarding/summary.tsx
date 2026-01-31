@@ -95,7 +95,7 @@ function SummaryComponent() {
             <hr className="my-4 border-0 border-t border-grey-500/20" />
             {chosen_addons.map((addon) => (
               <div
-                key={addon.id}
+                key={addon.name}
                 className="flex items-center justify-between md:gap-2"
               >
                 <span className="text-sm text-grey-500">{addon.label}</span>
