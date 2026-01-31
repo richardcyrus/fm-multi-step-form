@@ -12,6 +12,7 @@ import { gamingPlanSchema } from '@/lib/schema'
 import { Route as plansRoute } from '@/routes/_onboarding/select-plan'
 import { Route as summaryRoute } from '@/routes/_onboarding/summary'
 import { useGamingPlanStore } from '@/store/store'
+import { addonOptions } from '@/data/addons'
 
 export const Route = createFileRoute('/_onboarding/addons')({
   beforeLoad: ({ context }) => {
@@ -43,30 +44,6 @@ const addonsSchema = gamingPlanSchema.pick({
 })
 
 type AddonsStepSchema = z.infer<typeof addonsSchema>
-
-const addonOptions = [
-  {
-    name: 'online_service',
-    label: 'Online Service',
-    description: 'Access to multiplayer games',
-    monthly_price: 1,
-    yearly_price: 10,
-  },
-  {
-    name: 'larger_storage',
-    label: 'Larger storage',
-    description: 'Extra 1TB of cloud save',
-    monthly_price: 2,
-    yearly_price: 20,
-  },
-  {
-    name: 'custom_profile',
-    label: 'Customizable profile',
-    description: 'Custom theme on your profile',
-    monthly_price: 2,
-    yearly_price: 20,
-  },
-]
 
 function AddonsComponent() {
   const navigate = Route.useNavigate()

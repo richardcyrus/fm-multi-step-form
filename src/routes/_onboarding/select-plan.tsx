@@ -9,10 +9,7 @@ import { gamingPlanSchema } from '@/lib/schema'
 import { Route as addonsRoute } from '@/routes/_onboarding/addons'
 import { Route as yourInfoRoute } from '@/routes/_onboarding/your-info'
 import { useGamingPlanStore } from '@/store/store'
-
-import advancedIcon from '@/assets/icon-advanced.svg'
-import arcadeIcon from '@/assets/icon-arcade.svg'
-import proIcon from '@/assets/icon-pro.svg'
+import { planOptions } from '@/data/plans'
 
 export const Route = createFileRoute('/_onboarding/select-plan')({
   beforeLoad: ({ context }) => {
@@ -36,27 +33,6 @@ const selectPlanSchema = gamingPlanSchema.pick({
 })
 
 type SelectPlanSchema = z.infer<typeof selectPlanSchema>
-
-const planOptions = [
-  {
-    label: 'Arcade',
-    icon: arcadeIcon,
-    price: 9,
-    yearlyPrice: 90,
-  },
-  {
-    label: 'Advanced',
-    icon: advancedIcon,
-    price: 12,
-    yearlyPrice: 120,
-  },
-  {
-    label: 'Pro',
-    icon: proIcon,
-    price: 15,
-    yearlyPrice: 150,
-  },
-]
 
 function SelectPlansComponent() {
   const navigate = Route.useNavigate()
