@@ -9,7 +9,7 @@ import { addonsStepSchema } from '@/lib/schema'
 import { Route as plansRoute } from '@/routes/_onboarding/select-plan'
 import { Route as summaryRoute } from '@/routes/_onboarding/summary'
 import { useAddons, useGamingPlanStore } from '@/store/store'
-import { addonOptions } from '@/data/gamingData'
+import { ADDON_OPTIONS } from '@/data/gamingData'
 import { StepActions, StepLayout } from '@/components/StepLayout'
 
 export const Route = createFileRoute('/_onboarding/addons')({
@@ -54,7 +54,7 @@ function AddonsComponent() {
       onSubmit: ({ formApi }) => {
         const addons_list = formApi.getFieldValue('addons')
 
-        const addons_chosen = addonOptions.reduce<Array<AddOnSchema>>(
+        const addons_chosen = ADDON_OPTIONS.reduce<Array<AddOnSchema>>(
           (accumulator, option) => {
             const item = addons_list.find((addon) => addon === option.name)
             if (item) {
@@ -96,7 +96,7 @@ function AddonsComponent() {
         >
           <fieldset className="flex flex-col gap-2 md:gap-4">
             <legend className="sr-only">Pick your add-ons</legend>
-            {addonOptions.map((option, i) => (
+            {ADDON_OPTIONS.map((option, i) => (
               <form.AppField key={i} name="addons">
                 {(field) => (
                   <field.CheckboxCard

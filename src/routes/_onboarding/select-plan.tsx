@@ -7,7 +7,7 @@ import { selectPlanStepSchema } from '@/lib/schema'
 import { Route as addonsRoute } from '@/routes/_onboarding/addons'
 import { Route as yourInfoRoute } from '@/routes/_onboarding/your-info'
 import { useGamingPlanStore, usePlanSelection } from '@/store/store'
-import { planOptions } from '@/data/gamingData'
+import { PLAN_OPTIONS } from '@/data/gamingData'
 import { StepActions, StepLayout } from '@/components/StepLayout'
 
 export const Route = createFileRoute('/_onboarding/select-plan')({
@@ -91,7 +91,7 @@ function SelectPlansComponent() {
           </form.AppField>
           <fieldset className="flex flex-col gap-2 lg:flex-row lg:gap-4.5">
             <legend className="sr-only">Select your plan</legend>
-            {planOptions.map((planOpt) => (
+            {PLAN_OPTIONS.map((planOpt) => (
               <form.AppField
                 key={planOpt.label}
                 name="plan"
