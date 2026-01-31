@@ -1,10 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import type { YourInfoStepSchema } from '@/lib/schema'
-import { useAppForm } from '@/hooks/form'
 import { yourInfoStepSchema } from '@/lib/schema'
-import { useGamingPlanStore, usePersonalInfo } from '@/store/store'
+import { usePersonalInfo } from '@/store/store'
 import { Route as plansRoute } from '@/routes/_onboarding/select-plan'
 import { StepActions, StepLayout } from '@/components/StepLayout'
+import { useStepForm } from '@/hooks/useStepForm'
 
 export const Route = createFileRoute('/_onboarding/your-info')({
   component: YourInfoComponent,
@@ -13,23 +12,12 @@ export const Route = createFileRoute('/_onboarding/your-info')({
 function YourInfoComponent() {
   const navigate = Route.useNavigate()
 
-  const setData = useGamingPlanStore((state) => state.setData)
+  const personalInfo = usePersonalInfo()
 
-  const { full_name, email_address, phone_number } = usePersonalInfo()
-
-  const form = useAppForm({
-    defaultValues: {
-      full_name: full_name,
-      email_address: email_address,
-      phone_number: phone_number,
-    },
-    validators: {
-      onChange: yourInfoStepSchema,
-    },
-    onSubmit: ({ value }: { value: YourInfoStepSchema }) => {
-      setData(value)
-      navigate({ to: plansRoute.to })
-    },
+  const { form, handleSubmit } = useStepForm({
+    defaultValues: personalInfo,
+    schema: yourInfoStepSchema,
+    onSubmit: () => navigate({ to: plansRoute.to }),
   })
 
   return (
@@ -39,13 +27,7 @@ function YourInfoComponent() {
         description="Please provide your name, email address, and phone number."
         actions={<StepActions formId="your-info" />}
       >
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            form.handleSubmit()
-          }}
-          id="your-info"
-        >
+        <form onSubmit={handleSubmit} id="your-info">
           <div className="space-y-4 md:space-y-6">
             <form.AppField name="full_name">
               {(field) => (

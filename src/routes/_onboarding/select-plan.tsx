@@ -1,14 +1,13 @@
 import { useStore } from '@tanstack/react-form-start'
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import type { SelectPlanStepSchema } from '@/lib/schema'
-import { useAppForm } from '@/hooks/form'
 import { validatePersonalInfo } from '@/lib/routeValidation'
 import { selectPlanStepSchema } from '@/lib/schema'
 import { Route as addonsRoute } from '@/routes/_onboarding/addons'
 import { Route as yourInfoRoute } from '@/routes/_onboarding/your-info'
-import { useGamingPlanStore, usePlanSelection } from '@/store/store'
+import { usePlanSelection } from '@/store/store'
 import { PLAN_OPTIONS } from '@/data/gamingData'
 import { StepActions, StepLayout } from '@/components/StepLayout'
+import { useStepForm } from '@/hooks/useStepForm'
 
 export const Route = createFileRoute('/_onboarding/select-plan')({
   beforeLoad: ({ context }) => {
@@ -27,25 +26,12 @@ export const Route = createFileRoute('/_onboarding/select-plan')({
 function SelectPlansComponent() {
   const navigate = Route.useNavigate()
 
-  const setData = useGamingPlanStore((state) => state.setData)
+  const planSelection = usePlanSelection()
 
-  const { plan, plan_monthly_price, plan_yearly_price, show_yearly } =
-    usePlanSelection()
-
-  const form = useAppForm({
-    defaultValues: {
-      plan: plan,
-      plan_monthly_price: plan_monthly_price,
-      plan_yearly_price: plan_yearly_price,
-      show_yearly: show_yearly,
-    },
-    validators: {
-      onChange: selectPlanStepSchema,
-    },
-    onSubmit: ({ value }: { value: SelectPlanStepSchema }) => {
-      setData(value)
-      navigate({ to: addonsRoute.to })
-    },
+  const { form, handleSubmit } = useStepForm({
+    defaultValues: planSelection,
+    schema: selectPlanStepSchema,
+    onSubmit: () => navigate({ to: addonsRoute.to }),
   })
 
   const showYearly = useStore(form.store, (state) => state.values.show_yearly)
@@ -62,13 +48,7 @@ function SelectPlansComponent() {
           />
         }
       >
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            form.handleSubmit()
-          }}
-          id="select-plan"
-        >
+        <form onSubmit={handleSubmit} id="select-plan">
           <form.AppField name="plan_monthly_price">
             {(field) => (
               <input
