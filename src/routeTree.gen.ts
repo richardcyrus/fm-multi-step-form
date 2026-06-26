@@ -116,7 +116,7 @@ declare module '@tanstack/react-router' {
     '/_onboarding': {
       id: '/_onboarding'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof OnboardingRouteRouteImport
       parentRoute: typeof rootRouteImport
     }

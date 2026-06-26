@@ -31,7 +31,7 @@ const mockStore = {
 }
 
 // TODO: determine proper mock for useStore
-vi.mock('@tanstack/react-form-start', () => ({
+vi.mock('@tanstack/react-form', () => ({
   useStore: (store: any, selector: any) =>
     selector(
       store,

@@ -1,4 +1,4 @@
-import { useStore } from '@tanstack/react-form-start'
+import { useStore } from '@tanstack/react-form'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { validatePersonalInfo } from '@/lib/routeValidation'
 import { selectPlanStepSchema } from '@/lib/schema'
