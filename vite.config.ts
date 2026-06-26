@@ -8,21 +8,32 @@ import { nitro } from 'nitro/vite'
 import { configDefaults } from 'vitest/config'
 import tailwindcss from '@tailwindcss/vite'
 
+const isTest = process.env.VITEST === 'true'
+
 const config = defineConfig({
   plugins: [
     devtools(),
-    nitro(),
+    ...(isTest ? [] : [nitro()]),
     // this is the plugin that enables path aliases
     viteTsConfigPaths({
       projects: ['./tsconfig.json'],
     }),
-    tanstackStart(),
+    ...(isTest ? [] : [tanstackStart()]),
     tailwindcss(),
     viteReact(),
   ],
   test: {
     environment: 'jsdom',
     passWithNoTests: true,
+    deps: {
+      inline: [
+        'react',
+        'react-dom',
+        '@tanstack/react-router',
+        '@tanstack/react-form',
+        'react-helmet-async',
+      ],
+    },
     exclude: [
       ...configDefaults.exclude,
       '**/dist/**',
