@@ -6,9 +6,12 @@ This is a solution to the [Multi-step form challenge on Frontend Mentor](https:/
 
 - [Overview](#overview)
   - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
-- [Useful resources](#useful-resources)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
 - [Author](#author)
 
 ## Overview
@@ -28,6 +31,16 @@ Users should be able to:
   - A field has been missed
   - The email address is not formatted correctly
   - A step is submitted, but no selection has been made
+
+### Screenshot
+
+![A desktop view of the project](./screenshot/desktop.png)
+![A mobile view of the project](.screenshot/mobile.png)
+
+### Links
+
+- [Solution URL](https://www.frontendmentor.io/solutions/multi-step-form-solution-brJs--kZmL)
+- [Live Site URL](https://fm-multi-step-form-flame.vercel.app/)
 
 ## My process
 
